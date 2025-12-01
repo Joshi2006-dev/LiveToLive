@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HidrateFragment"
+    android:id="@+id/physicalScroll"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:cardCornerRadius="0dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/fisicgradient"
+                android:paddingTop="15dp">
+                <LinearLayout
+                    android:id="@+id/LinearTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="11dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@mipmap/backicon"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Actividad Física"
+                        android:textColor="@color/white"
+                        android:textSize="28sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtProgresoLbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/LinearTitle"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Progreso:"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:scaleType="fitEnd"
+                    android:src="@mipmap/menu_run"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBarPhy"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_below="@id/txtProgresoLbl"
+                    android:progress="90"
+                    android:max="100"
+                    android:progressTint="#ad0000"
+                    android:progressDrawable="@drawable/progress_custom"
+                    />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:background="#ededed"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/txtPasosLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="Pasos"
+                            android:textAlignment="center"
+                            android:textColor="#ad0000"
+                            android:textSize="20sp" />
+
+                        <RelativeLayout
+                            android:id="@+id/LayProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_below="@+id/txtPasosLabel">
+
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                android:id="@+id/circularProgressBar"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:layout_centerInParent="true"
+                                app:cpb_background_progressbar_color="#d3d3d3"
+                                app:cpb_background_progressbar_width="23dp"
+                                app:cpb_progress="0"
+                                app:cpb_progress_max="2500"
+                                app:cpb_progressbar_color="#ad0000"
+                                app:cpb_progressbar_width="15dp"
+                                app:cpb_round_border="true" />
+
+                            <TextView
+                                android:id="@+id/contadorpasos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/poppins_bold"
+                                android:paddingBottom="6dp"
+                                android:text="1250"
+                                android:textColor="@color/black"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:id="@+id/pasos_totales"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/contadorpasos"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/poppins"
+                                android:text="/2500"
+                                android:textColor="@color/black"
+                                android:textSize="11dp" />
+                            <TextView
+                                android:id="@+id/porcentaje"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@id/contadorpasos"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/poppins"
+                                android:text="56%"
+                                android:textColor="@color/black"
+                                android:textSize="11dp" />
+                        </RelativeLayout>
+
+                        <Button
+                            android:id="@+id/btnContador"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/LayProgress"
+                            android:layout_marginTop="15dp"
+                            android:backgroundTint="#ad0000"
+                            android:fontFamily="@font/poppins"
+                            android:text="Iniciar conteo"
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginBottom="15dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ededed"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:id="@+id/txtLabelCalBurn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Calorías quemadas"
+                                android:textAlignment="center"
+                                android:textColor="#ad0000"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtLabelCalBurn"
+                                android:orientation="horizontal"
+                                android:paddingEnd="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtCalBurn"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="1245 Kcal"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtKcalObjetivo"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="/ 300 kcal"
+                                    android:textAlignment="textStart"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginBottom="15dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ededed"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:id="@+id/txtDistanceLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Distancia Recorrida"
+                                android:textAlignment="center"
+                                android:textColor="#ad0000"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtDistanceLabel"
+                                android:orientation="horizontal"
+                                android:paddingEnd="10dp">
+
+                                <TextView
+                                    android:id="@+id/txtDistance"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="2.4 Km"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/distanceGoal"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="/ 5 km"
+                                    android:textAlignment="textStart"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ededed"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:id="@+id/txtStreakLbl"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Días Consecutivos"
+                                android:textAlignment="center"
+                                android:textColor="#ad0000"
+                                android:textSize="14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="80dp"
+                                android:layout_height="40dp"
+                                android:layout_below="@+id/txtStreakLbl"
+                                android:layout_centerInParent="true">
+
+                                <TextView
+                                    android:id="@+id/txtStreak"
+                                    android:layout_width="50dp"
+                                    android:layout_height="24dp"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="4"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="19sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtDayLbl"
+                                    android:layout_width="50dp"
+                                    android:layout_height="15dp"
+                                    android:layout_below="@+id/txtStreak"
+                                    android:text="dias"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:id="@+id/imgStreak"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_alignParentEnd="true"
+                                    app:srcCompat="@drawable/flamaapagada" />
+
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Historial de actividad Fisica"
+                android:textColor="#ad0000"
+                android:textSize="24sp"
+                android:layout_marginBottom="15dp"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historial"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:scrollbars="horizontal"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/desvanecidoizquierdo"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="15dp"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/desvanecidoderecho"
+                    android:layout_marginEnd="15dp"
+                    android:layout_gravity="end"/>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProfileFragment"
+    android:id="@+id/scroller"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+            <ImageView
+                android:padding="5dp"
+                android:id="@+id/btnVolver"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/previous"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Perfil"
+                android:textColor="#064751"
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="15dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/profilegradient"
+                android:padding="10dp">
+                <ImageView
+                    android:layout_width="130sp"
+                    android:layout_height="130sp"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20sp"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="120sp"
+                    android:layout_height="120sp"
+                    android:layout_marginTop="25sp"
+                    app:shapeAppearanceOverlay="@style/roundedImageView"
+                    android:src="@drawable/profile_example"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/txtNombreUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="24sp"
+                    android:layout_below="@+id/imgProfile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Alvaro Soto"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+
+                    android:layout_below="@+id/txtNombreUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true">
+                    <LinearLayout
+                        android:layout_width="115dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_gravity="start">
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/pasosprofile"
+                            android:padding="5dp"/>
+
+                        <TextView
+                            android:id="@+id/txtPasosTotales"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="14,500"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="14dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Pasos realizados"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="115dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_gravity="center">
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/sleepprofile"
+                            android:padding="5dp"/>
+
+                        <TextView
+                            android:id="@+id/txtHorasTotales"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="29"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="14dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Horas de sueño"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="115dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_gravity="right">
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/waterprofile"
+                            android:padding="5dp"/>
+
+                        <TextView
+                            android:id="@+id/txtLitrosTotales"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="18.9"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="14dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Litros tomados"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Información Personal"
+            android:textColor="#064751"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#064751"
+            android:layout_marginBottom="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="12dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="#ededed"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#064751"
+                                android:padding="13dp"
+                                android:src="@drawable/weight" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Mi peso (Kg):"
+                                android:textColor="#064751"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/txtPeso"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="73 Kg"
+                                android:textColor="#064751"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="12dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="#ededed"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#064751"
+                                android:padding="13dp"
+                                android:src="@drawable/height" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Mi altura (m):"
+                                android:textColor="#064751"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/txtAltura"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="1.75 m"
+                                android:textColor="#064751"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="12dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="#ededed"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#064751"
+                                android:padding="13dp"
+                                android:src="@drawable/edad" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Edad:"
+                                android:textColor="#064751"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/txtEdad"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="21 años"
+                                android:textColor="#064751"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="12dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="#ededed"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#064751"
+                                android:padding="13dp"
+                                android:src="@drawable/genre" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Sexo:"
+                                android:textColor="#064751"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/txtSexo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Masculino"
+                                android:textColor="#064751"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ededed">
+
+                    <TextView
+                        android:id="@+id/txtIMC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="55dp"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="23.8"
+                        android:textColor="#064751"
+                        android:textSize="48sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtIMC"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins"
+                        android:text="kg/m²"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/txtIMC"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="IMC Calcualdo"
+                        android:textColor="#064751"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
+                        android:layout_centerInParent="true"
+                        android:layout_below="@id/txtIMC"
+                        android:layout_marginTop="40dp">
+
+                        <TextView
+                            android:id="@+id/txtIMCindicator"
+                            android:layout_width="120dp"
+                            android:layout_height="30dp"
+                            android:background="#00bf63"
+                            android:fontFamily="@font/poppins"
+                            android:padding="7dp"
+                            android:text="PESO NORMAL"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

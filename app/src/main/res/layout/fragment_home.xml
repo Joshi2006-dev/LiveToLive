@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment"
+    android:id="@+id/scroller">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="12dp"
+            android:text="Menú Principal"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#064750"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mesActual"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/poppins"
+            android:text="NOVIEMBRE"
+            android:textAlignment="textStart"
+            android:textColor="#064751"
+            android:textSize="12sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/dateCard"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="35dp"
+            android:background="@drawable/datebackground">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/datebackground"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txtd1"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:padding="5dp"
+                    android:text="24"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtd2"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="25"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/txtd3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="26"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/txtd4"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="27"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/txtd5"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="28"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/txtd6"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="29"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/txtd7"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-black"
+                    android:textAlignment="center"
+                    android:textColor="#064751"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="30"
+                    android:padding="5dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:text="Lu"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Mar"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Mie"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Jue"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Vie"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Sab"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Dom"
+                android:textAlignment="center"
+                android:textColor="#064751"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Mis actividades"
+                android:textColor="#064751"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#064751"/>
+
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="0dp"
+                android:background="@drawable/hidratationgradient">
+
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/txtTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Hidratación"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <!-- Objetivo -->
+                <TextView
+                    android:id="@+id/txtObjLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitulo"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Objetivo:"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtObjetivo"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitulo"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="0dp"
+                    android:text="3.5 L"
+                    android:textAlignment="textEnd"
+                    android:textColor="#064751"
+                    android:textStyle="bold" />
+
+                <!-- Progreso -->
+                <TextView
+                    android:id="@+id/txtProgLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtObjLabel"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Progreso:"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtProgreso"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtObjLabel"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="0dp"
+                    android:text="1 L"
+                    android:textAlignment="textEnd"
+                    android:textColor="#064751"
+                    android:textStyle="bold" />
+
+                <!-- Barra de progreso custom -->
+
+                <!-- Imagen -->
+                <ImageView
+                    android:id="@+id/imgPersona"
+                    android:layout_width="160dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:scaleType="fitEnd"
+                    android:src="@mipmap/menu_water" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="134dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_below="@id/txtProgLabel"
+                    android:progress="30"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_custom"
+                    />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card2"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="0dp"
+                android:background="@drawable/sleepgradient">
+
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/txtTitulo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Sueño"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <!-- Objetivo -->
+                <TextView
+                    android:id="@+id/txtObjLabel2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitulo2"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Objetivo:"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtObjetivo2"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitulo2"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="8 H"
+                    android:textAlignment="textEnd"
+                    android:textColor="#c67d00"
+                    android:textStyle="bold" />
+
+                <!-- Progreso -->
+                <TextView
+                    android:id="@+id/txtProgLabel2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtObjLabel2"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Progreso:"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtProgreso2"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtObjLabel2"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="0dp"
+                    android:text="6 H"
+                    android:textAlignment="textEnd"
+                    android:textColor="#c67d00"
+                    android:textStyle="bold" />
+
+                <!-- Barra de progreso custom -->
+
+                <!-- Imagen -->
+                <ImageView
+                    android:id="@+id/imgPersona2"
+                    android:layout_width="160dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:scaleType="fitEnd"
+                    android:src="@mipmap/menu_sleep" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="134dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_below="@id/txtProgLabel2"
+                    android:progress="90"
+                    android:max="100"
+                    android:progressTint="#c67d00"
+                    android:progressDrawable="@drawable/progress_custom"
+                    />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card3"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="0dp"
+                android:background="@drawable/fisicgradient">
+
+                <!-- Título -->
+
+                <!-- Objetivo -->
+                <TextView
+                    android:id="@+id/txtTitulo3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Actividad Física"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPasosLb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitulo3"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Pasos:"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtPasos"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitulo3"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="0dp"
+                    android:text="3,524/6,500"
+                    android:textAlignment="textEnd"
+                    android:textColor="#ad0000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtCaloriasLb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtPasosLb"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Calorías:"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtCalorias"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtPasosLb"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="0dp"
+                    android:text="180 kcal"
+                    android:textAlignment="textEnd"
+                    android:textColor="#ad0000"
+                    android:textStyle="bold" />
+
+                <!-- Progreso -->
+                <TextView
+                    android:id="@+id/txtDistanciaLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtCaloriasLb"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Distancia:"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtDistancia"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtCaloriasLb"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="0dp"
+                    android:text="2.4 kml"
+                    android:textAlignment="textEnd"
+                    android:textColor="#ad0000"
+                    android:textStyle="bold" />
+
+
+
+                <!-- Barra de progreso custom -->
+
+                <!-- Imagen -->
+                <ImageView
+                    android:id="@+id/imgPersona3"
+                    android:layout_width="160dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:scaleType="fitEnd"
+                    android:src="@mipmap/menu_run" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="134dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_below="@id/txtDistanciaLabel"
+                    android:progress="54"
+                    android:progressTint="#ad0000"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_custom"
+                    />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity"
+    android:background="@color/white">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splasAnimation"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        app:lottie_rawRes="@raw/waterbubble"
+        app:lottie_autoPlay="true"
+        />
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/whitemodetlt"/>
+
+    <TextView
+        android:id="@+id/By"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splasAnimation"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/poppins"
+        android:text="Desarrollado por"
+        android:textColor="#cccccc"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/By"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Josué, Edward y Kenneth"
+        android:textColor="#064751"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="LiveToLive"
+        android:textColor="#064751"
+        android:textSize="48sp" />
+
+
+
+</RelativeLayout>

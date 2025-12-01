@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/water"
+        android:title="Hidratacion"
+        android:icon="@drawable/water"/>
+
+    <item
+        android:id="@+id/fisic"
+        android:title="Actividad"
+        android:icon="@drawable/run"/>
+
+    <item
+        android:id="@+id/sleep"
+        android:title="Sueño"
+        android:icon="@drawable/sleep"/>
+
+    <item
+        android:id="@+id/profile"
+        android:title="Perfil"
+        android:icon="@drawable/user"/>
+
+
+</menu>
