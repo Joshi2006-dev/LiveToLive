@@ -26,5 +26,6 @@
         app:itemTextColor="#0097b2"
         android:backgroundTintMode="@color/black"
         app:itemRippleColor="#0097b2"
-        app:itemGravity="center"/>
+        app:itemGravity="center"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"/>
 </RelativeLayout>
