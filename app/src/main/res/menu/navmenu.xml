@@ -5,19 +5,14 @@
         android:title="Home"
         android:icon="@drawable/home"/>
     <item
-        android:id="@+id/water"
-        android:title="Hidratacion"
-        android:icon="@drawable/water"/>
+        android:id="@+id/achievement"
+        android:title="Logros"
+        android:icon="@drawable/logro"/>
 
     <item
-        android:id="@+id/fisic"
-        android:title="Actividad"
-        android:icon="@drawable/run"/>
-
-    <item
-        android:id="@+id/sleep"
-        android:title="Sueño"
-        android:icon="@drawable/sleep"/>
+        android:id="@+id/group"
+        android:title="Equipo"
+        android:icon="@drawable/group"/>
 
     <item
         android:id="@+id/profile"

@@ -23,28 +23,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
-            R.id.water->{
-                supportFragmentManager.commit {
-                    replace<HidrateFragment>(R.id.Frame)
-                    setReorderingAllowed(true)
-                    addToBackStack("replacement")
-                }
+            R.id.achievement->{
                 true
             }
-            R.id.fisic->{
-                supportFragmentManager.commit {
-                    replace<PhysicalFragment>(R.id.Frame)
-                    setReorderingAllowed(true)
-                    addToBackStack("replacement")
-                }
-                true
-            }
-            R.id.sleep->{
-                supportFragmentManager.commit {
-                    replace<SleepFragment>(R.id.Frame)
-                    setReorderingAllowed(true)
-                    addToBackStack("replacement")
-                }
+            R.id.group->{
                 true
             }
             R.id.profile->{

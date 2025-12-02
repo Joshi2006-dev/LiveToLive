@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val home =inflater.inflate(R.layout.fragment_home, container, false)
         val carta1=home.findViewById<CardView>(R.id.card)
+        val carta2=home.findViewById<CardView>(R.id.card2)
+        val carta3=home.findViewById<CardView>(R.id.card3)
         val progre1=home.findViewById<ProgressBar>(R.id.progressBar)
         val progre2=home.findViewById<ProgressBar>(R.id.progressBar2)
         val progre3=home.findViewById<ProgressBar>(R.id.progressBar3)
@@ -65,7 +67,21 @@ class HomeFragment : Fragment() {
                 .start()
         }
         carta1.setOnClickListener {
-            Toast.makeText(requireContext(),"Hidratate perrito", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.beginTransaction().
+                    replace(R.id.Frame, HidrateFragment()).
+                    addToBackStack(null).commit()
+        }
+
+        carta2.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().
+            replace(R.id.Frame, SleepFragment()).
+            addToBackStack(null).commit()
+        }
+
+        carta3.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().
+            replace(R.id.Frame, PhysicalFragment()).
+            addToBackStack(null).commit()
         }
         return home
     }
