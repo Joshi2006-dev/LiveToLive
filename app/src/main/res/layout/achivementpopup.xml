@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="310dp"
+    android:layout_height="330dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="20dp">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fafafa"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/txtHeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="¡HAS OBTENIDO UN NUEVO LOGRO!"
+            android:textAlignment="center"
+            android:textColor="@color/hidra"
+            android:textSize="20sp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/AchivementIcon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:lottie_autoPlay="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/txtHeaderText"
+            app:lottie_rawRes="@raw/masterachicon"
+            android:scaleX="1.3"
+            android:scaleY="1.3"/>
+
+        <TextView
+            android:id="@+id/txtNameAchivement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/AchivementIcon"
+
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_bold"
+            android:text="REY DE LA DISCIPLINA"
+            android:textColor="@color/hidra"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/descAchivement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtNameAchivement"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Completa 1000 objetivos"
+            android:textColor="#c67d00"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnReclamar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#064751"
+            android:fontFamily="@font/poppins_bold"
+            android:text="RECLAMAR"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/descAchivement"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

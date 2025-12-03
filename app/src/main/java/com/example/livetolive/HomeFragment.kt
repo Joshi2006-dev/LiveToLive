@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.R.attr.progressDrawable
 import android.animation.ObjectAnimator
 import android.widget.ScrollView
+import android.widget.TextView
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -48,11 +49,16 @@ class HomeFragment : Fragment() {
         val progre1=home.findViewById<ProgressBar>(R.id.progressBar)
         val progre2=home.findViewById<ProgressBar>(R.id.progressBar2)
         val progre3=home.findViewById<ProgressBar>(R.id.progressBar3)
+        val txtprogre1=home.findViewById<TextView>(R.id.txtProgreso)
         val scrollview=home.findViewById<ScrollView>(R.id.scroller)
 
+
+        //Carga los datos que estan en el sharedPreferences Dentro de las cardvius
+        val porcentajeAgua= (sharedPreferencesApp.getFloat("HidratationProgress")/3.5f)*100
+        txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
         val anBar= barAnimation()
 
-        anBar.animateProgress(progre1,0,100)
+        anBar.animateProgress(progre1,0,porcentajeAgua.toInt())
         anBar.animateProgress(progre2,0,50)
         anBar.animateProgress(progre3,0,33)
 

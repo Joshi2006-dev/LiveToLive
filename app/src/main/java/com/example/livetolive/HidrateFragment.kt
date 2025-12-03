@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.ScrollView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,13 +53,71 @@ class HidrateFragment : Fragment() {
         val hidrate= inflater.inflate(R.layout.fragment_hidrate, container, false)
         val scroller=hidrate.findViewById<ScrollView>(R.id.hidrateScroll)
         val hidrateProgress=hidrate.findViewById<ProgressBar>(R.id.progressBarHidra)
+        val btnDisminuir=hidrate.findViewById<TextView>(R.id.btnDisminuir)
+        val btnAumentar=hidrate.findViewById<TextView>(R.id.btnIncrementar)
+        val LitrosTomados=hidrate.findViewById<TextView>(R.id.txtLitrostomados)
+        val objetivo=hidrate.findViewById<TextView>(R.id.txtObjetivo)
+        LitrosTomados.text= sharedPreferencesApp.getFloat("HidratationProgress").toString()
         val anBar= barAnimation()
         recyclerView=hidrate.findViewById(R.id.historial)
         recyclerView.layoutManager= LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
         adp= previousAdapter(datesList)
         recyclerView.adapter=adp
         recyclerView.scrollToPosition(adp.itemCount - 1)
-        anBar.animateProgress(hidrateProgress,0,100)
+
+        var porcentajeProgreso=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+        anBar.animateProgress(hidrateProgress,0,porcentajeProgreso.toInt())
+
+        btnDisminuir.setOnClickListener {
+            var porcentajeAnterior=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            var Progreso: Float=LitrosTomados.text.toString().toFloat()
+            if(Progreso>0){
+                Progreso= ((Progreso - 0.1f) * 10).roundToInt() / 10f
+            }
+            porcentajeProgreso=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            LitrosTomados.text=Progreso.toString()
+            anBar.animateProgress(hidrateProgress,porcentajeAnterior.toInt(),porcentajeProgreso.toInt())
+            saveProgress(Progreso)
+        }
+
+        btnDisminuir.setOnLongClickListener {
+            var porcentajeAnterior=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            var Progreso: Float=LitrosTomados.text.toString().toFloat()
+            if(Progreso>=1){
+                Progreso= ((Progreso - 1f) * 10).roundToInt() / 10f
+            }
+            LitrosTomados.text=Progreso.toString()
+            porcentajeProgreso=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            anBar.animateProgress(hidrateProgress,porcentajeAnterior.toInt(),porcentajeProgreso.toInt())
+            saveProgress(Progreso)
+            true
+        }
+
+        btnAumentar.setOnClickListener {
+            var porcentajeAnterior=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            var Progreso: Float=LitrosTomados.text.toString().toFloat()
+            if(Progreso>=0){
+                Progreso= ((Progreso + 0.1f) * 10).roundToInt() / 10f
+            }
+            LitrosTomados.text=Progreso.toString()
+            porcentajeProgreso=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            anBar.animateProgress(hidrateProgress,porcentajeAnterior.toInt(),porcentajeProgreso.toInt())
+            saveProgress(Progreso)
+        }
+
+        btnAumentar.setOnLongClickListener {
+            var porcentajeAnterior=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            var Progreso: Float=LitrosTomados.text.toString().toFloat()
+            if(Progreso>=0){
+                Progreso= ((Progreso + 1f) * 10).roundToInt() / 10f
+            }
+            LitrosTomados.text=Progreso.toString()
+            porcentajeProgreso=(LitrosTomados.text.toString().toFloat()/objetivo.text.toString().toFloat())*100
+            anBar.animateProgress(hidrateProgress,porcentajeAnterior.toInt(),porcentajeProgreso.toInt())
+            saveProgress(Progreso)
+            true
+        }
+
         scroller.apply {
             translationY = -100f
             alpha = 0f
@@ -67,6 +129,10 @@ class HidrateFragment : Fragment() {
                 .start()
         }
         return hidrate
+    }
+
+    fun saveProgress(progreso: Float){
+        sharedPreferencesApp.saveFloat("HidratationProgress",progreso)
     }
 
     companion object {
