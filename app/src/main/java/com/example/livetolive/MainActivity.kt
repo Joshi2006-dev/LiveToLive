@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.achievement->{
+                supportFragmentManager.commit {
+                    replace<AchievementFragment>(R.id.Frame)
+                    setReorderingAllowed(true)
+                    addToBackStack("replacement")
+                }
                 true
             }
             R.id.group->{
