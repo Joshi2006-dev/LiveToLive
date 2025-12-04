@@ -31,6 +31,7 @@ class AchievementFragment : Fragment() {
     private var param2: String? = null
 
     val l1=true
+
     val l2=true
     val l4=true
     val l3=true

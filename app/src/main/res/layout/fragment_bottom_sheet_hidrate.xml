@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".bottomSheetHidrate"
+    android:orientation="vertical"
+    android:background="@drawable/bottomsheet_shape">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Editar objetivo"
+        android:textColor="@color/hidra"
+        android:textSize="24sp" />
+    
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:counterTextColor="@color/hidra"
+        app:boxCornerRadiusTopStart="30dp"
+        android:textColorHint="@color/hidra"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etxObjetivo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins"
+            android:hint="Objetivo (Litros)"
+            android:inputType="numberDecimal"
+            android:textColor="@color/hidra"
+            android:textSize="14sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Confirmar"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:backgroundTint="@color/hidra" />
+
+</LinearLayout>

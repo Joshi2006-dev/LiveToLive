@@ -9,7 +9,6 @@ object sharedPreferencesApp {
     private const val MODE= Context.MODE_PRIVATE
     private lateinit var prefs: SharedPreferences
 
-    private const val KEY_POPBRONZE="BronzPop"
 
 
     fun init(context: Context){
@@ -28,6 +27,7 @@ object sharedPreferencesApp {
                 putBoolean("DiamondPop",false)
                 putBoolean("KingPop",false)
                 putBoolean("Init",true)
+                putFloat("HidrateGoal",0f)
                 putFloat("HidratationProgress",0f)
                 apply()
             }
