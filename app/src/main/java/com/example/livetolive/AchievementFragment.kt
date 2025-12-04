@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import com.airbnb.lottie.LottieAnimationView
@@ -28,6 +30,15 @@ class AchievementFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val l1=true
+
+    val l2=true
+    val l4=true
+    val l3=true
+    val l5=true
+    val l6=true
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -43,6 +54,21 @@ class AchievementFragment : Fragment() {
         // Inflate the layout for this fragment
         val achivement= inflater.inflate(R.layout.fragment_achievement, container, false)
         val scroller=achivement.findViewById<ScrollView>(R.id.scroller)
+        val nAchivs=achivement.findViewById<TextView>(R.id.txtCounterAchicements)
+
+        //Declaracion del popup
+        val dialogView=layoutInflater.inflate(R.layout.achivementpopup,null)
+        val btnReclamar=dialogView.findViewById<Button>(R.id.btnReclamar)
+        val popupIcon=dialogView.findViewById<LottieAnimationView>(R.id.AchivementIcon)
+        val TituloPopu=dialogView.findViewById<TextView>(R.id.txtNameAchivement)
+        val descPopup=dialogView.findViewById<TextView>(R.id.descAchivement)
+        val dialog= AlertDialog.Builder(requireContext()).setView(dialogView).create()
+
+        btnReclamar.setOnClickListener{
+            dialog.dismiss()
+        }
+
+
         //Para el logro 1
         val CardBronze=achivement.findViewById<RelativeLayout>(R.id.CardLogro1)
         val tittleBronze=achivement.findViewById<TextView>(R.id.txtLogro1)
@@ -82,61 +108,145 @@ class AchievementFragment : Fragment() {
 
 
         //Bronze Achivement Unlock
-        CardBronze.setBackgroundResource(R.drawable.bronzeback)
-        tittleBronze.text="BRONCE"
-        tittleBronze.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        descBronze.text="Completa cualquier objetivo por primera vez"
-        bronzeIcon.setAnimation(R.raw.bronze)
-        bronzeIcon.scaleY=2f
-        bronzeIcon.scaleX=2f
-        bronzeIcon.playAnimation()
+        if(l1){
+            CardBronze.setBackgroundResource(R.drawable.bronzeback)
+            tittleBronze.text="BRONCE"
+            tittleBronze.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            descBronze.text="Completa cualquier objetivo por primera vez"
+            bronzeIcon.setAnimation(R.raw.bronze)
+            bronzeIcon.scaleY=2f
+            bronzeIcon.scaleX=2f
+            bronzeIcon.playAnimation()
+            if(!sharedPreferencesApp.getBoolean("BronzPop")){
+                TituloPopu.text= tittleBronze.text
+                descPopup.text=descBronze.text
+                popupIcon.setAnimation(R.raw.bronze)
+                popupIcon.scaleY=2f
+                popupIcon.scaleX=2f
+                dialog.show()
+                sharedPreferencesApp.saveBoolean("BronzPop",true)
+            }
+            nAchivs.text="Obtenidos (1/6)"
+        }
+
 
         //Silver Achivement Unlock
-        CardSilver.setBackgroundResource(R.drawable.silverback)
-        tittleSilver.text="PLATA"
-        tittleSilver.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        descSilver.text="Completa 50 objetivos"
-        silverIcon.setAnimation(R.raw.silver)
-        silverIcon.scaleY=2f
-        silverIcon.scaleX=2f
-        silverIcon.playAnimation()
+        if(l2){
+            CardSilver.setBackgroundResource(R.drawable.silverback)
+            tittleSilver.text="PLATA"
+            tittleSilver.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            descSilver.text="Completa 50 objetivos"
+            silverIcon.setAnimation(R.raw.silver)
+            silverIcon.scaleY=2f
+            silverIcon.scaleX=2f
+            silverIcon.playAnimation()
+            if(!sharedPreferencesApp.getBoolean("SilverPop")){
+                TituloPopu.text= tittleSilver.text
+                descPopup.text=descSilver.text
+                popupIcon.setAnimation(R.raw.silver)
+                popupIcon.scaleY=2f
+                popupIcon.scaleX=2f
+                dialog.show()
+                sharedPreferencesApp.saveBoolean("SilverPop",true)
+            }
+            nAchivs.text="Obtenidos (2/6)"
+        }
+
 
         //Gold Achivement Unlock
-        CardGold.setBackgroundResource(R.drawable.goldback)
-        tittleGold.text="ORO"
-        tittleGold.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        descGold.text="Completa 50 objetivos"
-        goldIcon.setAnimation(R.raw.gold)
-        goldIcon.playAnimation()
+        if (l3){
+            CardGold.setBackgroundResource(R.drawable.goldback)
+            tittleGold.text="ORO"
+            tittleGold.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            descGold.text="Completa 50 objetivos"
+            goldIcon.setAnimation(R.raw.gold)
+            goldIcon.playAnimation()
+            if(!sharedPreferencesApp.getBoolean("GoldPop")){
+                TituloPopu.text= tittleGold.text
+                descPopup.text=descGold.text
+                popupIcon.scaleY=1f
+                popupIcon.scaleX=1f
+                popupIcon.setAnimation(R.raw.gold)
+                dialog.show()
+                sharedPreferencesApp.saveBoolean("GoldPop",true)
+            }
+            nAchivs.text="Obtenidos (3/6)"
+        }
+
 
         //Platinum Achivement Unlock
-        CardPlatinum.setBackgroundResource(R.drawable.platinumback)
-        tittlePlat.text="PLATINO"
-        tittlePlat.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        descPlatinun.text="Completa 100 objetivos"
-        platinumIcon.setAnimation(R.raw.platinum)
-        platinumIcon.playAnimation()
-        platinumIcon.speed=1.5f
+        if(l4){
+            CardPlatinum.setBackgroundResource(R.drawable.platinumback)
+            tittlePlat.text="PLATINO"
+            tittlePlat.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            descPlatinun.text="Completa 100 objetivos"
+            platinumIcon.setAnimation(R.raw.platinum)
+            platinumIcon.playAnimation()
+            platinumIcon.speed=1.5f
+            if(!sharedPreferencesApp.getBoolean("PlatinumPop")){
+                TituloPopu.text= tittlePlat.text
+                descPopup.text=descPlatinun.text
+                popupIcon.scaleY=1f
+                popupIcon.scaleX=1f
+                popupIcon.speed=1.7f
+                popupIcon.setAnimation(R.raw.platinum)
+                dialog.show()
+                sharedPreferencesApp.saveBoolean("PlatinumPop",true)
+            }
+            nAchivs.text="Obtenidos (4/6)"
+        }
+
 
 
         //Diamond Achivement Unlock
-        CardDiamond.setBackgroundResource(R.drawable.hidratationgradient)
-        tittleDiam.text="DIAMANTE"
-        tittleDiam.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        descDiamond.text="Completa 500 objetivos"
-        diamondIcon.setAnimation(R.raw.diamond)
-        diamondIcon.updatePadding(0,0,0,30)
-        diamondIcon.scaleX=1.6f
-        diamondIcon.scaleY=1.6f
+        if (l5){
+            CardDiamond.setBackgroundResource(R.drawable.hidratationgradient)
+            tittleDiam.text="DIAMANTE"
+            tittleDiam.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            descDiamond.text="Completa 500 objetivos"
+            diamondIcon.setAnimation(R.raw.diamond)
+            diamondIcon.updatePadding(0,0,0,30)
+            diamondIcon.scaleX=1.6f
+            diamondIcon.scaleY=1.6f
+            if(!sharedPreferencesApp.getBoolean("DiamondPop")){
+                TituloPopu.text= tittleDiam.text
+                descPopup.text=descDiamond.text
+                popupIcon.scaleY=1.6f
+                popupIcon.scaleX=1.6f
+                popupIcon.speed=1f
+                popupIcon.updatePadding(0,0,0,30)
+                popupIcon.setAnimation(R.raw.diamond)
+                dialog.show()
+                sharedPreferencesApp.saveBoolean("DiamondPop",true)
+            }
+            nAchivs.text="Obtenidos (5/6)"
+        }
+
 
 
         //King Achivement Unlock
-        cardKing.setBackgroundResource(R.drawable.kingachback)
-        titleKing.text="REY DE LA DISCIPLINA"
-        titleKing.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        descKing.text="Completa 1000 objetivos"
-        Icono.setAnimation(R.raw.masterachicon)
-        Icono.updatePadding(0,0,0,0)
+        if(l6){
+            cardKing.setBackgroundResource(R.drawable.kingachback)
+            titleKing.text="REY DE LA DISCIPLINA"
+            titleKing.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            descKing.text="Completa 1000 objetivos"
+            Icono.setAnimation(R.raw.masterachicon)
+            Icono.updatePadding(0,0,0,0)
+            if(!sharedPreferencesApp.getBoolean("KingPop")){
+                TituloPopu.text= titleKing.text
+                descPopup.text=descKing.text
+                popupIcon.scaleY=1f
+                popupIcon.scaleX=1f
+                popupIcon.speed=1f
+                popupIcon.updatePadding(0,0,0,0)
+                popupIcon.setAnimation(R.raw.masterachicon)
+                dialog.show()
+                sharedPreferencesApp.saveBoolean("KingPop",true)
+            }
+            nAchivs.text="Obtenidos (6/6)"
+        }
+        //El popup
+
 
 
         scroller.apply {
