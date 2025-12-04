@@ -1,265 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sleepScroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HidrateFragment"
-    android:id="@+id/sleepScroll">
+    tools:context=".SleepFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <!-- HEADER -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            app:cardCornerRadius="0dp"
-            >
+            app:cardCornerRadius="0dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/sleepgradient"
                 android:paddingTop="15dp">
+
                 <LinearLayout
                     android:id="@+id/LinearTitle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="30dp"
                         android:layout_margin="11dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@mipmap/backicon"/>
+                        android:src="@mipmap/backicon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins_bold"
                         android:text="Sueño"
                         android:textColor="@color/white"
-                        android:textSize="30sp" />
-
-
+                        android:textSize="30sp"
+                        android:fontFamily="@font/poppins_bold" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/txtProgresoLbl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/LinearTitle"
+                    android:layout_below="@id/LinearTitle"
                     android:layout_marginStart="18dp"
-                    android:layout_marginTop="7dp"
-                    android:fontFamily="@font/poppins_bold"
                     android:text="Progreso:"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_bold" />
 
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="0dp"
                     android:scaleType="fitEnd"
-                    android:src="@mipmap/menu_sleep"/>
+                    android:src="@mipmap/menu_sleep" />
 
                 <ProgressBar
                     android:id="@+id/progressBarSleep"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
+                    android:layout_below="@id/txtProgresoLbl"
                     android:layout_marginStart="11dp"
                     android:layout_marginEnd="11dp"
-                    android:layout_below="@id/txtProgresoLbl"
-                    android:progress="90"
                     android:max="100"
-                    android:progressTint="#c67d00"
-                    android:progressDrawable="@drawable/progress_custom"
-                    />
+                    android:progressTint="#c67d00" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <!-- OBJETIVO Y PROGRESO (TARJETAS IGUALES) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:orientation="horizontal">
+
+            <!-- OBJETIVO -->
             <androidx.cardview.widget.CardView
-                android:layout_width="160dp"
-                android:layout_height="200dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="0dp"
-                android:layout_marginEnd="15dp">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="15dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="#ededed"
-                    android:padding="10dp">
+                    android:padding="15dp">
 
                     <TextView
                         android:id="@+id/txtObjetivoLabel"
                         android:layout_width="wrap_content"
-                        android:layout_height="28dp"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/poppins_bold"
+                        android:layout_height="wrap_content"
                         android:text="Objetivo"
                         android:textColor="@color/sleep"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:layout_centerHorizontal="true" />
+
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/trophy"
-                        android:layout_width="100dp"
-                        android:layout_height="90dp"
-                        android:scaleType="fitXY"
-                        android:layout_centerHorizontal="true"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_below="@+id/txtObjetivoLabel"
-                        app:lottie_autoPlay="true"
-                        app:lottie_rawRes="@raw/trophy"/>
+                        android:layout_centerHorizontal="true"
+                        app:lottie_rawRes="@raw/trophy"
+                        app:lottie_autoPlay="true" />
+
                     <TextView
                         android:id="@+id/txtObjetivo"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/trophy"
                         android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/poppins_bold"
                         android:text="8 Horas"
                         android:textColor="#febb49"
-                        android:textSize="16sp" />
+                        android:textSize="18sp"
+                        android:fontFamily="@font/poppins_bold" />
 
                     <Button
                         android:id="@+id/btnEditarObjetivo"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="45dp"
                         android:layout_below="@+id/txtObjetivo"
-                        android:backgroundTint="@color/sleep"
-                        android:fontFamily="@font/poppins_bold"
-                        android:padding="0dp"
+                        android:layout_marginTop="10dp"
                         android:text="Editar"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:backgroundTint="@color/sleep"
+                        android:fontFamily="@font/poppins_bold" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
+            <!-- PROGRESO -->
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="0dp">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="15dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="#ededed"
-                    android:padding="10dp">
+                    android:padding="15dp">
+
                     <TextView
                         android:id="@+id/txtProgresoLabel"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/poppins_bold"
+                        android:layout_height="wrap_content"
                         android:text="Progreso"
                         android:textColor="@color/sleep"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:layout_centerHorizontal="true" />
+
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/water"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="fitXY"
-                        android:layout_centerHorizontal="true"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_below="@+id/txtProgresoLabel"
+                        android:layout_centerHorizontal="true"
                         app:lottie_rawRes="@raw/sleepingbear"
                         app:lottie_autoPlay="true"
-                        app:lottie_loop="true"/>
+                        app:lottie_loop="true" />
+
                     <LinearLayout
-                        android:layout_below="@+id/water"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_centerHorizontal="true">
+                        android:layout_below="@+id/water"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/btnDisminuir"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/circle"
-                            android:backgroundTint="@color/sleep"
-                            android:fontFamily="@font/poppins_bold"
-                            android:padding="3dp"
-                            android:text="-"
-                            android:textAlignment="center"
-                            android:layout_gravity="bottom"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:text="&lt;"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
-                            tools:ignore="RtlCompat" />
+                            android:textSize="22sp"
+                            android:gravity="center"
+                            android:backgroundTint="@color/sleep" />
 
                         <TextView
                             android:id="@+id/txtLitrostomados"
                             android:layout_width="90dp"
-                            android:layout_height="44dp"
-                            android:fontFamily="@font/poppins_bold"
+                            android:layout_height="60dp"
                             android:text="7"
                             android:textAlignment="center"
                             android:textColor="#febb49"
-                            android:textSize="34sp" />
+                            android:textSize="36sp"
+                            android:fontFamily="@font/poppins_bold" />
 
                         <TextView
                             android:id="@+id/btnIncrementar"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/circle"
-                            android:backgroundTint="@color/sleep"
-                            android:fontFamily="@font/poppins_bold"
-                            android:padding="3dp"
-                            android:text="+"
-                            android:textAlignment="center"
-                            android:layout_gravity="bottom"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:text="&gt;"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
-                            tools:ignore="RtlCompat" />
-
+                            android:textSize="22sp"
+                            android:gravity="center"
+                            android:backgroundTint="@color/sleep" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/labelHoras"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:layout_below="@+id/water"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/water"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="45dp"
-                        android:fontFamily="@font/poppins_bold"
+                        android:layout_marginTop="55dp"
                         android:text="Horas"
                         android:textColor="#febb49"
-                        android:textSize="14sp" />
-                </RelativeLayout>
+                        android:textSize="16sp" />
 
+                    <Button
+                        android:id="@+id/btnSetAlarm"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_below="@id/labelHoras"
+                        android:layout_marginTop="15dp"
+                        android:text="Configurar alarma"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/sleep"
+                        android:fontFamily="@font/poppins_bold" />
+
+                </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
+        <!-- CONSEJOS -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_marginLeft="15dp"
-            android:fontFamily="@font/poppins_bold"
             android:text="Consejos"
             android:textColor="@color/sleep"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins_bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
+
+            <!-- Consejo 1 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginBottom="15dp"
-                app:cardElevation="0dp">
+                android:layout_marginBottom="15dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ededed">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -268,43 +276,45 @@
                         <TextView
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/poppins_bold"
-                            android:padding="10dp"
                             android:text="1"
-                            android:textAlignment="center"
                             android:textColor="@color/sleep"
-                            android:textSize="34sp" />
+                            android:textSize="34sp"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/poppins_bold"
+                            android:padding="10dp" />
 
                         <TextView
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/poppins_bold"
                             android:text="Evita la pantallas 30 minutos antes de dormir."
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:fontFamily="@font/poppins_bold" />
+
                         <ImageView
-                            android:layout_marginLeft="15dp"
                             android:layout_width="90dp"
                             android:layout_height="match_parent"
                             android:src="@drawable/adsleep1"
-                            android:scaleType="fitXY"/>
-
+                            android:scaleType="fitXY"
+                            android:layout_marginLeft="15dp" />
                     </LinearLayout>
 
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <!-- Consejo 2 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginBottom="15dp"
-                app:cardElevation="0dp">
+                android:layout_marginBottom="15dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ededed">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -313,43 +323,45 @@
                         <TextView
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/poppins_bold"
-                            android:padding="10dp"
                             android:text="2"
-                            android:textAlignment="center"
                             android:textColor="@color/sleep"
-                            android:textSize="34sp" />
+                            android:textSize="34sp"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/poppins_bold"
+                            android:padding="10dp" />
 
                         <TextView
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/poppins_bold"
                             android:text="No comas pesado justo antes de dormir."
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:fontFamily="@font/poppins_bold" />
+
                         <ImageView
-                            android:layout_marginLeft="15dp"
                             android:layout_width="110dp"
                             android:layout_height="match_parent"
                             android:src="@drawable/adsleep2"
-                            android:scaleType="fitXY"/>
-
+                            android:scaleType="fitXY"
+                            android:layout_marginLeft="15dp" />
                     </LinearLayout>
 
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <!-- Consejo 3 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginBottom="15dp"
-                app:cardElevation="0dp">
+                android:layout_marginBottom="15dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ededed">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -358,29 +370,27 @@
                         <TextView
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/poppins_bold"
-                            android:padding="10dp"
                             android:text="3"
-                            android:textAlignment="center"
                             android:textColor="@color/sleep"
-                            android:textSize="34sp" />
+                            android:textSize="34sp"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/poppins_bold"
+                            android:padding="10dp" />
 
                         <TextView
                             android:layout_width="190dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/poppins_bold"
                             android:text="Mantén tus horarios de sueño lo más constantes posible."
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:fontFamily="@font/poppins_bold" />
+
                         <ImageView
-                            android:layout_marginLeft="50dp"
-                            android:layout_gravity="start"
                             android:layout_width="70dp"
                             android:layout_height="match_parent"
                             android:src="@drawable/adsleep3"
-                            android:scaleType="fitXY"/>
-
+                            android:scaleType="fitXY"
+                            android:layout_marginLeft="50dp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -388,37 +398,42 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
+        <!-- HISTORIAL -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:fontFamily="@font/poppins_bold"
             android:text="Historial de sueño"
             android:textColor="@color/sleep"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_bold" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historial"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:scrollbars="horizontal"/>
+                android:scrollbars="horizontal" />
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/desvanecidoizquierdo"
                 android:layout_gravity="start"
-                android:layout_marginStart="15dp"/>
+                android:layout_marginStart="15dp" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/desvanecidoderecho"
-                android:layout_marginEnd="15dp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp" />
+
         </FrameLayout>
 
     </LinearLayout>
