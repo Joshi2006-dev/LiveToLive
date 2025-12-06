@@ -27,16 +27,34 @@ object sharedPreferencesApp {
                 putBoolean("PlatinumPop",false)
                 putBoolean("DiamondPop",false)
                 putBoolean("KingPop",false)
+
+                //Este de aqui hace que solo se ejecute una vez
                 putBoolean("Init",true)
+
+                //shared Preferences para los objetivos y progresos de hidratacion
                 putFloat("HidrateGoal",0f)
                 putFloat("HidratationProgress",0f)
+
+                //shared Preferences para los objetivos y progresos de actividad fisica
+                putInt("ActividadGoal",0)
+                putInt("ActividadProgress",0)
+
+                //shared Preferences para los objetivos y progresos de sueño
+                putInt("SleepGoal",0)
+                putInt("SleepProgress",0)
+
+                //shared Preferences para los datos personales del usuario
+                putString("Nombre","")
+                putFloat("Peso",0f)
+                putFloat("Altura",0f)
+                putInt("Edad",0)
+                putString("Sexo","")
                 apply()
             }
         }
     }
 
 
-    //Aqui van los SharedPreferences para Achievements (Yo ando comentando para que se entienda, no es que chat GPT me anda haciendo el ejercicio, se me ubican)
     fun saveBoolean(key: String, value: Boolean){
         prefs.edit { putBoolean(key, value) }
     }
@@ -50,6 +68,21 @@ object sharedPreferencesApp {
     }
     fun getFloat(key: String, default: Float=0f): Float{
         return prefs.getFloat(key,default)
+    }
+
+    fun saveString(key: String, value: String) {
+        prefs.edit { putString(key, value) }
+    }
+
+    fun getString(key: String, default: String=""): String? {
+        return prefs.getString(key, default)
+    }
+
+    fun saveInt(key: String, value: Int){
+        prefs.edit { putInt(key, value) }
+    }
+    fun getInt(key: String, default: Int=0): Int{
+        return prefs.getInt(key,default)
     }
 
 

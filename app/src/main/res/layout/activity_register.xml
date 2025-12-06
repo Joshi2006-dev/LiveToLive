@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,245 +7,250 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <ImageView
-        android:id="@+id/viejitas"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:src="@drawable/grannysruns"
-        android:scaleType="fitXY"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp">
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/livetolive"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="LiveToLive"
-                android:textColor="@color/white"
-                android:textSize="26sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="APLICACIÓN"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-    </LinearLayout>
     <RelativeLayout
-        android:layout_marginTop="200dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rounded_menu"
-        android:backgroundTint="#0097b2"
-        android:padding="20dp"
-        >
-
-        <TextView
-            android:id="@+id/txtHeaderText"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/viejitas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Ingresa tus datos personales"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputNombre"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:layout_marginHorizontal="20dp"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:counterTextColor="@color/white"
-            app:boxCornerRadiusTopStart="30dp"
-            app:boxStrokeWidth="3dp"
-            app:boxStrokeWidthFocused="4dp"
-            app:boxStrokeColor="@color/selector_border"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            android:textColorHint="@color/white"
-            android:layout_below="@+id/txtHeaderText"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etxNombre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/poppins"
-                android:hint="Nombre Completo"
-                android:inputType="text"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputPeso"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:layout_marginHorizontal="20dp"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:counterTextColor="@color/white"
-            app:boxCornerRadiusTopStart="30dp"
-            app:boxStrokeWidth="3dp"
-            app:boxStrokeWidthFocused="4dp"
-            app:boxStrokeColor="@color/selector_border"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            android:textColorHint="@color/white"
-            android:layout_below="@+id/inputNombre"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etxPeso"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/poppins"
-                android:hint="Peso (Kg)"
-                android:inputType="numberDecimal"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:layout_marginHorizontal="20dp"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:counterTextColor="@color/white"
-            app:boxCornerRadiusTopStart="30dp"
-            app:boxStrokeWidth="3dp"
-            app:boxStrokeWidthFocused="4dp"
-            app:boxStrokeColor="@color/selector_border"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            android:textColorHint="@color/white"
-            android:id="@+id/inputAltura"
-            android:layout_below="@+id/inputPeso"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etxAltura"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/poppins"
-                android:hint="Altura (m)"
-                android:inputType="numberDecimal"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:layout_marginHorizontal="20dp"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:counterTextColor="@color/white"
-            app:boxCornerRadiusTopStart="30dp"
-            app:boxStrokeWidth="3dp"
-            app:boxStrokeWidthFocused="4dp"
-            app:boxStrokeColor="@color/selector_border"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            android:textColorHint="@color/white"
-            android:id="@+id/inputEdad"
-            android:layout_below="@+id/inputAltura"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etxEdad"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/poppins"
-                android:hint="Edad"
-                android:inputType="number"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
+            android:layout_height="330dp"
+            android:src="@drawable/grannysruns"
+            android:scaleType="centerCrop"/>
         <LinearLayout
-            android:id="@+id/RadioBotones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/inputEdad"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="22dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/livetolive"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="LiveToLive"
+                    android:textColor="@color/white"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="APLICACIÓN"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_marginTop="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_menu"
+            android:backgroundTint="#0097b2"
+            android:padding="20dp"
+            >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/txtHeaderText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Seleccione una opcion"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Ingresa tus datos personales"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
-            <RadioGroup
+                android:textSize="22sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputNombre"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="20dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:counterTextColor="@color/white"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeWidth="3dp"
+                app:boxStrokeWidthFocused="4dp"
+                app:boxStrokeColor="@color/selector_border"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                android:textColorHint="@color/white"
+                android:layout_below="@+id/txtHeaderText"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Nombre Completo"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputPeso"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="20dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:counterTextColor="@color/white"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeWidth="3dp"
+                app:boxStrokeWidthFocused="4dp"
+                app:boxStrokeColor="@color/selector_border"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                android:textColorHint="@color/white"
+                android:layout_below="@+id/inputNombre"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxPeso"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Peso (Kg)"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="20dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:counterTextColor="@color/white"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeWidth="3dp"
+                app:boxStrokeWidthFocused="4dp"
+                app:boxStrokeColor="@color/selector_border"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                android:textColorHint="@color/white"
+                android:id="@+id/inputAltura"
+                android:layout_below="@+id/inputPeso"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxAltura"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Altura (cm)"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="20dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:counterTextColor="@color/white"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeWidth="3dp"
+                app:boxStrokeWidthFocused="4dp"
+                app:boxStrokeColor="@color/selector_border"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                android:textColorHint="@color/white"
+                android:id="@+id/inputEdad"
+                android:layout_below="@+id/inputAltura"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxEdad"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Edad"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/RadioBotones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/inputEdad"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="22dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Seleccione una opcion"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_below="@id/inputEdad">
+
+                    <RadioButton
+                        android:id="@+id/rdHombre"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:button="@color/transparente"
+                        android:fontFamily="@font/poppins_bold"
+                        android:padding="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:text="Hombre"
+                        android:elevation="4dp"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/radio_text_color"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/rdMujer"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:button="@color/transparente"
+                        android:fontFamily="@font/poppins_bold"
+                        android:padding="10dp"
+                        android:text="Mujer"
+                        android:background="@drawable/radio_selector"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/radio_text_color"
+                        android:textSize="16sp" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSiguiente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/RadioBotones"
                 android:layout_centerHorizontal="true"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_below="@id/inputEdad">
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="20dp"
+                android:text="Siguiente →"
+                android:textColor="@color/hidra"
+                android:textSize="16sp" />
 
-                <RadioButton
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:button="@color/transparente"
-                    android:fontFamily="@font/poppins_bold"
-                    android:padding="10dp"
-                    android:background="@drawable/radio_selector"
-                    android:text="Hombre"
-                    android:elevation="4dp"
-                    android:textAlignment="center"
-                    android:textColor="@drawable/radio_text_color"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:button="@color/transparente"
-                    android:fontFamily="@font/poppins_bold"
-                    android:padding="10dp"
-                    android:text="Mujer"
-                    android:background="@drawable/radio_selector"
-                    android:textAlignment="center"
-                    android:textColor="@drawable/radio_text_color"
-                    android:textSize="16sp" />
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSiguiente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/RadioBotones"
-            android:layout_centerHorizontal="true"
-            android:backgroundTint="@color/white"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_marginTop="20dp"
-            android:text="Siguiente →"
-            android:textColor="@color/hidra"
-            android:textSize="16sp" />
-
+        </RelativeLayout>
     </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>

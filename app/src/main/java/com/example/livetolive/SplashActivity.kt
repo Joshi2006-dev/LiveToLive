@@ -20,8 +20,13 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, WelcomeActivity::class.java))
-            finish()
+            if (sharedPreferencesApp.getString("Nombre")=="") {
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            }else{
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+
         },3800)
     }
 }
