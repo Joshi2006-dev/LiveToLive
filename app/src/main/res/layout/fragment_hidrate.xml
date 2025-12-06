@@ -90,7 +90,7 @@
             android:padding="15dp"
             android:orientation="horizontal">
             <androidx.cardview.widget.CardView
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:layout_height="200dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="0dp"
@@ -180,17 +180,17 @@
 
                         <TextView
                             android:id="@+id/btnDisminuir"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:background="@drawable/circle"
                             android:backgroundTint="#064751"
                             android:fontFamily="@font/poppins_bold"
-                            android:padding="3dp"
+                            android:padding="6dp"
                             android:text="-"
                             android:textAlignment="center"
                             android:layout_gravity="bottom"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
+                            android:textSize="24sp"
                             tools:ignore="RtlCompat" />
 
                         <TextView
@@ -205,17 +205,17 @@
 
                         <TextView
                             android:id="@+id/btnIncrementar"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:background="@drawable/circle"
                             android:backgroundTint="#064751"
                             android:fontFamily="@font/poppins_bold"
-                            android:padding="3dp"
+                            android:padding="6dp"
                             android:text="+"
                             android:textAlignment="center"
                             android:layout_gravity="bottom"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
+                            android:textSize="24sp"
                             tools:ignore="RtlCompat" />
 
                     </LinearLayout>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PlanActivity"
+    android:background="@color/white"
+    >
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp">
+        <ImageView
+            android:padding="5dp"
+            android:id="@+id/btnVolver"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/previous"
+            android:scaleType="fitXY"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Volver"
+            android:textColor="#064751"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="230dp"
+        android:layout_height="230dp"
+        app:lottie_rawRes="@raw/plananimation"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_gravity="center"
+        android:scaleX="1.3"
+        android:scaleY="1.3"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Hemos creado el mejor plan según tus datos"
+        android:textAlignment="center"
+        android:textColor="@color/hidra"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="20sp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#ededed">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="5dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/waterprofile"
+                        android:background="@color/hidra"/>
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Objetivo de hidratación"
+                        android:textColor="@color/hidra"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txtobjetivodiarioHidra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="4.5 Litros al día"
+                        android:textColor="@color/hidra"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="5dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/pasosprofile"
+                        android:background="@color/hidra"/>
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Objetivo de actividad física"
+                        android:textColor="@color/hidra"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txtobjetivodiarioActividad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="4,500 pasos al dia"
+                        android:textColor="@color/hidra"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="5dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/sleepprofile"
+                        android:background="@color/hidra"/>
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Objetivo de sueño"
+                        android:textColor="@color/hidra"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txtobjetivosleep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="8 horas al dia"
+                        android:textColor="@color/hidra"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btnFinalizar"
+        android:layout_width="145dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/hidra"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Finalizar →"
+        android:textColor="@color/white"/>
+
+
+
+</LinearLayout>

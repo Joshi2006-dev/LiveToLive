@@ -5,14 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.livetolive.databinding.FragmentHidrateBinding
+import com.airbnb.lottie.LottieAnimationView
 import org.w3c.dom.Text
 import kotlin.math.round
 import kotlin.math.roundToInt
@@ -57,6 +60,7 @@ class HidrateFragment : Fragment() {
 
         binding = FragmentHidrateBinding.inflate(inflater, container, false)
 
+
         taskViewModel = ViewModelProvider(this).get(HidrateViewModel::class.java)
 
 
@@ -68,6 +72,7 @@ class HidrateFragment : Fragment() {
         val objetivo = binding.txtObjetivo
         val imgBtnVolver = binding.btnBack
 
+
         objetivo.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()
 
         binding.btnEditarObjetivo.setOnClickListener {
@@ -78,6 +83,7 @@ class HidrateFragment : Fragment() {
         imgBtnVolver.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
 
         LitrosTomados.text = sharedPreferencesApp.getFloat("HidratationProgress").toString()
 
@@ -141,11 +147,15 @@ class HidrateFragment : Fragment() {
             Progreso = ((Progreso + 0.1f) * 10).roundToInt() / 10f
 
             LitrosTomados.text = Progreso.toString()
+            if (Progreso >= objetivo.text.toString().toFloat()) {
+                mostrarDialgo()
+            }
 
             porcentajeProgreso =
                 (LitrosTomados.text.toString().toFloat() / objetivo.text.toString().toFloat()) * 100
 
             anBar.animateProgress(hidrateProgress, porcentajeAnterior.toInt(), porcentajeProgreso.toInt())
+            objCumplido()
             saveProgress(Progreso)
         }
 
@@ -156,9 +166,14 @@ class HidrateFragment : Fragment() {
                 Progreso = ((Progreso + 1f) * 10).roundToInt() / 10f
             }
             LitrosTomados.text = Progreso.toString()
+            if (Progreso >= objetivo.text.toString().toFloat()) {
+                mostrarDialgo()
+            }
+            LitrosTomados.text = Progreso.toString()
             val porcentajeProgreso = (Progreso / objetivo.text.toString().toFloat()) * 100
             anBar.animateProgress(hidrateProgress, porcentajeAnterior.toInt(), porcentajeProgreso.toInt())
             saveProgress(Progreso)
+            objCumplido()
             true
         }
 
@@ -177,16 +192,50 @@ class HidrateFragment : Fragment() {
                 .start()
         }
 
+        objCumplido()
+
         return binding.root
     }
 
-    private fun recargarFragmento() {
-        parentFragmentManager.beginTransaction().apply {
-            detach(this@HidrateFragment)
-            attach(this@HidrateFragment)
-            commit()
+    fun mostrarDialgo(){
+        val dialogView=layoutInflater.inflate(R.layout.alertpopup,null)
+        val btnDialog=dialogView.findViewById<Button>(R.id.btnEntendido)
+        val infoPopup=dialogView.findViewById<TextView>(R.id.txtAviso)
+        val titlePopup=dialogView.findViewById<TextView>(R.id.txtHeaderText)
+        val iconPopup=dialogView.findViewById<LottieAnimationView>(R.id.AlertIcon)
+        iconPopup.setAnimation(R.raw.success)
+        iconPopup.loop(false)
+        titlePopup.text="¡FELICIDADES!"
+        infoPopup.text="Haz cumplido con el objetivo de hidratación el dia de hoy"
+        val dialog= AlertDialog.Builder(requireContext()).setView(dialogView).create()
+        dialog.show()
+        btnDialog.setOnClickListener {
+            dialog.dismiss()
         }
     }
+
+    fun objCumplido(){
+        if(binding.txtObjetivo.text.toString().toFloat()<=binding.txtLitrostomados.text.toString().toFloat()) {
+            binding.btnDisminuir.isEnabled = false
+            TextInactivo(binding.btnDisminuir)
+            binding.btnIncrementar.isEnabled = false
+            TextInactivo(binding.btnIncrementar)
+        }else{
+            binding.btnDisminuir.isEnabled = true
+            binding.btnIncrementar.isEnabled = true
+        }
+    }
+
+    fun TextInactivo(text:TextView){
+        text.setTextColor(resources.getColor(R.color.hidra))
+        text.backgroundTintList=resources.getColorStateList(R.color.gray)
+    }
+
+    fun btnInactivo(btn:Button){
+        btn.setTextColor(resources.getColor(R.color.hidra))
+        btn.backgroundTintList=resources.getColorStateList(R.color.gray)
+    }
+
 
     fun saveProgress(progreso: Float){
         sharedPreferencesApp.saveFloat("HidratationProgress",progreso)

@@ -20,6 +20,7 @@ object sharedPreferencesApp {
         val alreadyInitialized=prefs.getBoolean("Init",false)
         if(!alreadyInitialized){
             prefs.edit().apply{
+                //shared Preferences para los estados de los logros
                 putBoolean("BronzPop",false)
                 putBoolean("SilverPop",false)
                 putBoolean("GoldPop",false)
