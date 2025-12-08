@@ -61,9 +61,13 @@ class HomeFragment : Fragment() {
 
         //Titulos de las Cartas
         val txtprogre1=home.findViewById<TextView>(R.id.txtProgreso)
+        val txtprogre2=home.findViewById<TextView>(R.id.txtProgreso2)
 
         //Labels de los Objetivos
         val txtobj1=home.findViewById<TextView>(R.id.txtObjetivo)
+        val txtobj2=home.findViewById<TextView>(R.id.txtObjetivo2)
+        val txtobj3=home.findViewById<TextView>(R.id.txtPasos)
+
 
         //Elementos del calendario
         val txtd1=home.findViewById<TextView>(R.id.txtd1)
@@ -110,14 +114,23 @@ class HomeFragment : Fragment() {
         }
 
         //Carga los datos que estan en el sharedPreferences Dentro de las cardvius
-        txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()
+        txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
         val porcentajeAgua= (sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100
         txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
+
+        txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
+        val porcentajeSueño= (sharedPreferencesApp.getInt("SleepProgress")/sharedPreferencesApp.getInt("SleepGoal"))*100
+        txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
+
+        txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
+        val porcentajeActividad= (sharedPreferencesApp.getInt("ActividadProgress")/sharedPreferencesApp.getInt("ActividadGoal"))*100
+
+
         val anBar= barAnimation()
 
         anBar.animateProgress(progre1,0,porcentajeAgua.toInt())
-        anBar.animateProgress(progre2,0,50)
-        anBar.animateProgress(progre3,0,33)
+        anBar.animateProgress(progre2,0,porcentajeSueño.toInt())
+        anBar.animateProgress(progre3,0,porcentajeActividad.toInt())
 
         scrollview.apply {
             translationY = 100f

@@ -280,7 +280,7 @@
                 <TextView
                     android:id="@+id/txtTitulo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="32dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/poppins_bold"
@@ -297,7 +297,7 @@
                     android:layout_below="@id/txtTitulo"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Objetivo:"
                     android:textColor="@android:color/white"
                     android:textSize="13sp" />
@@ -322,7 +322,7 @@
                     android:layout_below="@id/txtObjLabel"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Progreso:"
                     android:textColor="@android:color/white"
                     android:textSize="13sp" />
@@ -388,7 +388,7 @@
                 <TextView
                     android:id="@+id/txtTitulo2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="32dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/poppins_bold"
@@ -405,7 +405,7 @@
                     android:layout_below="@id/txtTitulo2"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Objetivo:"
                     android:textColor="@android:color/white"
                     android:textSize="13sp" />
@@ -431,7 +431,7 @@
                     android:layout_below="@id/txtObjLabel2"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Progreso:"
                     android:textColor="@android:color/white"
                     android:textSize="13sp" />
@@ -499,7 +499,7 @@
                 <TextView
                     android:id="@+id/txtTitulo3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="31dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_bold"
@@ -515,7 +515,7 @@
                     android:layout_below="@id/txtTitulo3"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Pasos:"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
@@ -539,7 +539,7 @@
                     android:layout_below="@id/txtPasosLb"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Calorías:"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
@@ -564,7 +564,7 @@
                     android:layout_below="@id/txtCaloriasLb"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Distancia:"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />

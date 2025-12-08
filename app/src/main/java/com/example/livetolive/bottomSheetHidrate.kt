@@ -57,6 +57,11 @@ class bottomSheetHidrate : BottomSheetDialogFragment() {
                     objetivo.setText(sharedPreferencesApp.getFloat("HidrateGoal").toString())
                 }else{
                     sharedPreferencesApp.saveFloat("HidrateGoal",objetivo.text.toString().toFloat())
+                    parentFragmentManager.setFragmentResult(
+                        "hidra_refresh",
+                        Bundle().apply { putBoolean("updated", true) }
+                    )
+
                     dismiss()
                 }
             }else{

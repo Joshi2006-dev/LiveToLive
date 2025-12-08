@@ -74,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                     Pedad=0
                 }
                 totalHidra=0.033f*(etxPeso.text.toString().toFloat())+(0.001f*(etxAltura.text.toString().toFloat()))+Asexo+Aedad
-                Fhidratacion=((totalHidra * 100).roundToInt() / 100f)
+                Fhidratacion=((totalHidra * 10).roundToInt() / 10f)
                 FActividad=(6000+Ppeso+Paltura+Psexo-Pedad)
                 sharedPreferencesApp.saveFloat("HidrateGoal",Fhidratacion)
                 sharedPreferencesApp.saveInt("ActividadGoal",FActividad)

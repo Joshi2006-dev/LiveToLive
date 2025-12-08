@@ -79,7 +79,7 @@
                                 android:fontFamily="@font/poppins_bold"
                                 android:layout_marginTop="10dp"
                                 android:paddingTop="10dp"
-                                android:text="DESCONOCIDO"
+                                android:text="POR DESBLOQUEAR"
                                 android:textColor="#737373"
                                 android:textSize="24sp" />
 
@@ -128,7 +128,7 @@
                             android:layout_height="45dp"
                             android:fontFamily="@font/poppins_bold"
                             android:paddingTop="10dp"
-                            android:text="DESCONOCIDO"
+                            android:text="POR DESBLOQUEAR"
                             android:textColor="#737373"
                             android:textSize="24sp" />
 
@@ -177,7 +177,7 @@
                             android:layout_height="45dp"
                             android:fontFamily="@font/poppins_bold"
                             android:paddingTop="10dp"
-                            android:text="DESCONOCIDO"
+                            android:text="POR DESBLOQUEAR"
                             android:textColor="#737373"
                             android:textSize="24sp" />
 
@@ -225,7 +225,7 @@
                             android:layout_height="45dp"
                             android:fontFamily="@font/poppins_bold"
                             android:paddingTop="10dp"
-                            android:text="DESCONOCIDO"
+                            android:text="POR DESBLOQUEAR"
                             android:textColor="#737373"
                             android:textSize="24sp" />
 
@@ -275,7 +275,7 @@
                             android:layout_height="45dp"
                             android:fontFamily="@font/poppins_bold"
                             android:paddingTop="10dp"
-                            android:text="DESCONOCIDO"
+                            android:text="POR DESBLOQUEAR"
                             android:textColor="#737373"
                             android:textSize="24sp" />
 
@@ -326,7 +326,7 @@
                             android:layout_height="45dp"
                             android:fontFamily="@font/poppins_bold"
                             android:paddingTop="10dp"
-                            android:text="DESCONOCIDO"
+                            android:text="POR DESBLOQUEAR"
                             android:textColor="#737373"
                             android:textSize="24sp" />
 

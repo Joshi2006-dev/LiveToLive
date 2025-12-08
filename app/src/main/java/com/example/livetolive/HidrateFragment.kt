@@ -16,7 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.livetolive.databinding.FragmentHidrateBinding
 import com.airbnb.lottie.LottieAnimationView
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.math.round
 import kotlin.math.roundToInt
 
@@ -35,15 +42,14 @@ class HidrateFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     lateinit var binding: FragmentHidrateBinding
+    private lateinit var db: AppDatabase
+
     private lateinit var taskViewModel: HidrateViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adp: previousAdapter
-    private val datesList=listOf(
-        previousDataClass("Noviembre","27",50, R.color.hidra),
-        previousDataClass("Noviembre","28",90,R.color.hidra),
-        previousDataClass("Noviembre","29",70,R.color.hidra),
-        previousDataClass("Noviembre","30",100,R.color.hidra),
-    )
+    val colorConstante = R.color.hidra
+    val listaPrevious = mutableListOf<previousDataClass>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +65,27 @@ class HidrateFragment : Fragment() {
     ): View {
 
         binding = FragmentHidrateBinding.inflate(inflater, container, false)
+        db = AppDatabase.getDatabase(requireContext())
+        CoroutineScope(Dispatchers.IO).launch {
+            db.hidratacionDao().getAll().collect { registros ->
+                val listaTemp = mutableListOf<previousDataClass>()
 
+                registros.forEach { h ->
+                    val (mes, dia) = formatFecha(h.fecha)
+                    val progreso = ((h.litrosRegistrados / h.litrosObjetivo) * 100).toInt()
+                    listaTemp.add(previousDataClass(mes, dia, progreso, colorConstante))
+                }
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    listaPrevious.clear()
+                    listaPrevious.addAll(listaTemp)
+                    adp.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(adp.itemCount - 1)
+                }
+            }
+        }
 
         taskViewModel = ViewModelProvider(this).get(HidrateViewModel::class.java)
-
 
         val scroller = binding.hidrateScroll
         val hidrateProgress = binding.progressBarHidra
@@ -97,7 +120,7 @@ class HidrateFragment : Fragment() {
             false
         )
 
-        adp = previousAdapter(datesList)
+        adp = previousAdapter(listaPrevious)
         recyclerView.adapter = adp
         recyclerView.scrollToPosition(adp.itemCount - 1)
 
@@ -193,8 +216,33 @@ class HidrateFragment : Fragment() {
         }
 
         objCumplido()
+        parentFragmentManager.setFragmentResultListener("hidra_refresh", this) { _, _ ->
+            refrescarPantalla()
+        }
 
         return binding.root
+    }
+
+    fun formatFecha(date: Date): Pair<String, String> {
+        val mes = SimpleDateFormat("MMMM", Locale("es", "ES")).format(date) // "Noviembre"
+        val dia = SimpleDateFormat("d", Locale("es", "ES")).format(date)    // "25"
+        return Pair(mes, dia)
+    }
+
+
+    fun refrescarPantalla() {
+        val nuevoObjetivo = sharedPreferencesApp.getFloat("HidrateGoal")
+        binding.txtObjetivo.text = nuevoObjetivo.toString()
+
+        val progreso = sharedPreferencesApp.getFloat("HidratationProgress")
+        binding.txtLitrostomados.text = progreso.toString()
+
+        val porcentaje = (progreso / nuevoObjetivo) * 100
+
+        val anBar = barAnimation()
+        anBar.animateProgress(binding.progressBarHidra, 0, porcentaje.toInt())
+
+        objCumplido()
     }
 
     fun mostrarDialgo(){
@@ -215,14 +263,16 @@ class HidrateFragment : Fragment() {
     }
 
     fun objCumplido(){
-        if(binding.txtObjetivo.text.toString().toFloat()<=binding.txtLitrostomados.text.toString().toFloat()) {
+        if(binding.txtLitrostomados.text.toString().toFloat() >= binding.txtObjetivo.text.toString().toFloat()) {
             binding.btnDisminuir.isEnabled = false
             TextInactivo(binding.btnDisminuir)
             binding.btnIncrementar.isEnabled = false
             TextInactivo(binding.btnIncrementar)
         }else{
             binding.btnDisminuir.isEnabled = true
+            TextActivo(binding.btnDisminuir)
             binding.btnIncrementar.isEnabled = true
+            TextActivo(binding.btnIncrementar)
         }
     }
 
@@ -231,10 +281,11 @@ class HidrateFragment : Fragment() {
         text.backgroundTintList=resources.getColorStateList(R.color.gray)
     }
 
-    fun btnInactivo(btn:Button){
-        btn.setTextColor(resources.getColor(R.color.hidra))
-        btn.backgroundTintList=resources.getColorStateList(R.color.gray)
+    fun TextActivo(text:TextView){
+        text.setTextColor(resources.getColor(R.color.white))
+        text.backgroundTintList=resources.getColorStateList(R.color.hidra)
     }
+
 
 
     fun saveProgress(progreso: Float){

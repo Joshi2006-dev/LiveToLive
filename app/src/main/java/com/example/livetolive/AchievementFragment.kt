@@ -30,9 +30,9 @@ class AchievementFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    val l1=false
+    val l1=true
 
-    val l2=false
+    val l2=true
     val l4=false
     val l3=false
     val l5=false
