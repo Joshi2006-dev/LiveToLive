@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
+import android.widget.TextView
+import kotlin.math.round
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,8 +39,43 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         val profile= inflater.inflate(R.layout.fragment_profile, container, false)
         val scrollview=profile.findViewById<ScrollView>(R.id.scroller)
+        val peso=profile.findViewById<TextView>(R.id.txtPeso)
+        val altura=profile.findViewById<TextView>(R.id.txtAltura)
+        val edad=profile.findViewById<TextView>(R.id.txtEdad)
+        val sexo=profile.findViewById<TextView>(R.id.txtSexo)
+        val nombre=profile.findViewById<TextView>(R.id.txtNombreUsuario)
+        val imc=profile.findViewById<TextView>(R.id.txtIMC)
+        val indicador=profile.findViewById<TextView>(R.id.txtIMCindicator)
 
-        scrollview.apply {
+
+        peso.text=sharedPreferencesApp.getFloat("Peso").toString()+" Kg"
+        altura.text=(sharedPreferencesApp.getFloat("Altura")/100).toString()+" m"
+        edad.text=sharedPreferencesApp.getInt("Edad").toString()+" años"
+        sexo.text=sharedPreferencesApp.getString("Sexo")
+        nombre.text=sharedPreferencesApp.getString("Nombre")
+        val pesocalc = sharedPreferencesApp.getFloat("Peso", 0f) // 0f es valor por defecto
+        val alturaCm = sharedPreferencesApp.getFloat("Altura", 0f)
+        val alturaM = alturaCm / 100
+        val IMCcalc: Float = pesocalc / (alturaM * alturaM)
+        val IMCRedondeado = round(IMCcalc * 10) / 10
+        imc.text=IMCRedondeado.toString()
+
+        if (IMCRedondeado < 18.5) {
+            indicador.text = "PESO BAJO"
+        }else if (IMCRedondeado in 18.5..24.9) {
+            indicador.text = "PESO NORMAL"
+        }else if (IMCRedondeado in 25.0..29.9) {
+            indicador.text = "SOBREPESO"
+        }else if (IMCRedondeado in 30.0..34.9) {
+            indicador.text = "OBESIDAD TIPO I"
+        }else if (IMCRedondeado in 35.0..39.9) {
+            indicador.text = "OBESIDAD TIPO II"
+        }else if (IMCRedondeado >= 40) {
+            indicador.text = "OBESIDAD TIPO III y IV"
+        }
+
+
+                scrollview.apply {
             translationY = 100f
             alpha = 0f
 

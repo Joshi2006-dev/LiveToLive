@@ -33,10 +33,10 @@ class AchievementFragment : Fragment() {
     val l1=true
 
     val l2=true
-    val l4=true
-    val l3=true
-    val l5=true
-    val l6=true
+    val l4=false
+    val l3=false
+    val l5=false
+    val l6=false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

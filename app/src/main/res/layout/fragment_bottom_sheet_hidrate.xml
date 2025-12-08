@@ -38,7 +38,8 @@
             android:hint="Objetivo (Litros)"
             android:inputType="numberDecimal"
             android:textColor="@color/hidra"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:maxLength="3"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

@@ -6,5 +6,6 @@
     <color name="pshy">#ad0000</color>
     <color name="sleep">#c67d00</color>
     <color name="indicatorC">#0097b2</color>
+    <color name="gray">#ABABAB</color>
     <color name="transparente">#00FFFFFF</color>
 </resources>
