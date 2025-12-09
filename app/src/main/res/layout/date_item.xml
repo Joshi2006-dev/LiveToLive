@@ -35,7 +35,7 @@
             android:textColor="@color/black"/>
 
         <ProgressBar
-            android:id="@+id/progressBarPhy"
+            android:id="@+id/progressBarItem"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="25dp"

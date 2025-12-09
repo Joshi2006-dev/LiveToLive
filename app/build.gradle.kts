@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp") version "2.0.21-1.0.26"
-
 }
 
 android {
@@ -49,6 +48,7 @@ dependencies {
     implementation("com.airbnb.android:lottie:3.4.2")
     implementation("com.github.tehras:charts:0.2.4-alpha")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
