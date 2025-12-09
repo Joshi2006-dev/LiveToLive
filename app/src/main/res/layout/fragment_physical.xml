@@ -90,7 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingRight="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,291 +100,260 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="25dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="260dp"
+                        android:layout_height="match_parent"
                         android:background="#ededed"
                         android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/txtPasosLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="15dp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="Pasos"
-                            android:textAlignment="center"
-                            android:textColor="#ad0000"
-                            android:textSize="20sp" />
-
                         <RelativeLayout
                             android:id="@+id/LayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="130dp"
-                            android:layout_below="@+id/txtPasosLabel">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
                             <com.mikhaellopez.circularprogressbar.CircularProgressBar
                                 android:id="@+id/circularProgressBar"
-                                android:layout_width="200dp"
-                                android:layout_height="200dp"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
                                 android:layout_centerInParent="true"
                                 app:cpb_background_progressbar_color="#d3d3d3"
-                                app:cpb_background_progressbar_width="23dp"
-                                app:cpb_progress="0"
+                                app:cpb_background_progressbar_width="12dp"
+                                app:cpb_progress="430"
                                 app:cpb_progress_max="2500"
                                 app:cpb_progressbar_color="#ad0000"
-                                app:cpb_progressbar_width="15dp"
+                                app:cpb_progressbar_width="10dp"
+                                app:cpb_round_border="true" />
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                android:id="@+id/circularProgressBarDistancia"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:layout_centerInParent="true"
+                                app:cpb_background_progressbar_color="#d3d3d3"
+                                app:cpb_background_progressbar_width="12dp"
+                                app:cpb_progress="1000"
+                                app:cpb_progress_max="2500"
+                                app:cpb_progressbar_color="#0097b2"
+                                app:cpb_progressbar_width="10dp"
+                                app:cpb_round_border="true" />
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                android:id="@+id/circularProgressBarCalorias"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_centerInParent="true"
+                                app:cpb_background_progressbar_color="#d3d3d3"
+                                app:cpb_background_progressbar_width="12dp"
+                                app:cpb_progress="400"
+                                app:cpb_progress_max="2500"
+                                app:cpb_progressbar_color="#febb49"
+                                app:cpb_progressbar_width="10dp"
                                 app:cpb_round_border="true" />
 
                             <TextView
-                                android:id="@+id/contadorpasos"
+                                android:id="@+id/txtPorcentajeProgreso"
                                 android:layout_width="wrap_content"
-                                android:layout_height="30dp"
+                                android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:fontFamily="@font/poppins_bold"
-                                android:paddingBottom="6dp"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="20dp" />
+                                android:text="80%"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/pasos_totales"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/contadorpasos"
-                                android:layout_centerInParent="true"
-                                android:fontFamily="@font/poppins"
-                                android:text="/2500"
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
-                            <TextView
-                                android:id="@+id/porcentaje"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_above="@id/contadorpasos"
-                                android:layout_centerInParent="true"
-                                android:fontFamily="@font/poppins"
-                                android:text="0%"
-                                android:textColor="@color/black"
-                                android:textSize="11dp" />
                         </RelativeLayout>
-
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="15dp"
+                    android:layout_marginLeft="10dp"
+                    app:cardElevation="0dp">
 
-                    <androidx.cardview.widget.CardView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginBottom="15dp"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp">
+                        android:layout_height="wrap_content"
+                        android:background="#ededed"
+                        android:padding="10dp">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#ededed"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:id="@+id/txtLabelCalBurn"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="Calorías quemadas"
-                                android:textAlignment="center"
-                                android:textColor="#ad0000"
-                                android:textSize="14sp" />
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/txtLabelCalBurn"
-                                android:orientation="horizontal"
-                                android:paddingEnd="10dp">
+                                android:layout_marginBottom="5dp"
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/txtCalBurn"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:fontFamily="@font/poppins_bold"
-                                    android:text="1245 Kcal"
-                                    android:textAlignment="textEnd"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/circle"
+                                    android:backgroundTint="#0097b2"
+                                    android:layout_marginRight="10dp"
+                                    android:padding="8dp"
+                                    android:src="@drawable/distanceicon" />
 
-                                <TextView
-                                    android:id="@+id/txtKcalObjetivo"
-                                    android:layout_width="100dp"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="/ 300 kcal"
-                                    android:textAlignment="textStart"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="22dp"
+                                        android:fontFamily="@font/poppins_bold"
+                                        android:text="Distancia"
+                                        android:textColor="#0097b2"
+                                        android:textSize="20sp" />
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/txtDistancia"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/poppins_bold"
+                                            android:text="180" />
+                                        <TextView
+                                            android:id="@+id/txtDistanciaObj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="/3 km"/>
+                                    </LinearLayout>
+
+                                </LinearLayout>
 
                             </LinearLayout>
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginBottom="15dp"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#ededed"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:id="@+id/txtDistanceLabel"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="Distancia Recorrida"
-                                android:textAlignment="center"
-                                android:textColor="#ad0000"
-                                android:textSize="14sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/txtDistanceLabel"
-                                android:orientation="horizontal"
-                                android:paddingEnd="10dp">
+                                android:layout_marginBottom="5dp"
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/txtDistance"
-                                    android:layout_width="90dp"
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/circle"
+                                    android:backgroundTint="#ad0000"
+                                    android:padding="8dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/pasosprofile" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:fontFamily="@font/poppins_bold"
-                                    android:text="2.4 Km"
-                                    android:textAlignment="textEnd"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/distanceGoal"
-                                    android:layout_width="100dp"
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="22dp"
+                                        android:fontFamily="@font/poppins_bold"
+                                        android:text="Pasos"
+                                        android:textColor="#ad0000"
+                                        android:textSize="20sp" />
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/txtPasos"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/poppins_bold"
+                                            android:text="569" />
+                                        <TextView
+                                            android:id="@+id/txtPasosObj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="/4500 pasos"/>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/circle"
+                                    android:backgroundTint="#febb49"
+                                    android:padding="8dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/kcalicon" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="/ 5 km"
-                                    android:textAlignment="textStart"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="22dp"
+                                        android:fontFamily="@font/poppins_bold"
+                                        android:text="Calorias"
+                                        android:textColor="#febb49"
+                                        android:textSize="20sp" />
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/txtKcal"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/poppins_bold"
+                                            android:text="150" />
+                                        <TextView
+                                            android:id="@+id/txtKcalObj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="/300 kcal"/>
+                                    </LinearLayout>
+
+                                </LinearLayout>
 
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
 
-                    </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#ededed"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:id="@+id/txtStreakLbl"
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="Días Consecutivos"
-                                android:textAlignment="center"
-                                android:textColor="#ad0000"
-                                android:textSize="14sp" />
-
-                            <RelativeLayout
-                                android:layout_width="80dp"
-                                android:layout_height="40dp"
-                                android:layout_below="@+id/txtStreakLbl"
-                                android:layout_centerInParent="true">
-
-                                <TextView
-                                    android:id="@+id/txtStreak"
-                                    android:layout_width="50dp"
-                                    android:layout_height="24dp"
-                                    android:fontFamily="@font/poppins_bold"
-                                    android:text="4"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="19sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/txtDayLbl"
-                                    android:layout_width="50dp"
-                                    android:layout_height="15dp"
-                                    android:layout_below="@+id/txtStreak"
-                                    android:text="dias"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/txtStreakCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0"
-                                    android:textSize="22sp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
-                                    android:layout_below="@id/txtDayLbl"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="8dp"
-                                    android:gravity="center" />
-
-                                <com.airbnb.lottie.LottieAnimationView
-                                    android:id="@+id/imgStreak"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_alignParentEnd="true"
-                                    app:srcCompat="@drawable/flamaapagada" />
-
-                            </RelativeLayout>
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_margin="15dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="4dp"
+            app:cardElevation="0dp"
             app:cardBackgroundColor="#ededed">
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChartWeek"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:padding="15dp" />
+                android:layout_height="match_parent"
+                android:padding="15dp">
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChartWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    />
+            </RelativeLayout>
+
+
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
