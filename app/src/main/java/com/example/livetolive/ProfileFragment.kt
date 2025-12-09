@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import kotlin.math.round
@@ -36,7 +37,6 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val profile= inflater.inflate(R.layout.fragment_profile, container, false)
         val scrollview=profile.findViewById<ScrollView>(R.id.scroller)
         val peso=profile.findViewById<TextView>(R.id.txtPeso)
@@ -47,13 +47,12 @@ class ProfileFragment : Fragment() {
         val imc=profile.findViewById<TextView>(R.id.txtIMC)
         val indicador=profile.findViewById<TextView>(R.id.txtIMCindicator)
 
-
         peso.text=sharedPreferencesApp.getFloat("Peso").toString()+" Kg"
         altura.text=(sharedPreferencesApp.getFloat("Altura")/100).toString()+" m"
         edad.text=sharedPreferencesApp.getInt("Edad").toString()+" años"
         sexo.text=sharedPreferencesApp.getString("Sexo")
         nombre.text=sharedPreferencesApp.getString("Nombre")
-        val pesocalc = sharedPreferencesApp.getFloat("Peso", 0f) // 0f es valor por defecto
+        val pesocalc = sharedPreferencesApp.getFloat("Peso", 0f)
         val alturaCm = sharedPreferencesApp.getFloat("Altura", 0f)
         val alturaM = alturaCm / 100
         val IMCcalc: Float = pesocalc / (alturaM * alturaM)
@@ -74,8 +73,13 @@ class ProfileFragment : Fragment() {
             indicador.text = "OBESIDAD TIPO III y IV"
         }
 
+        val btnEditInfo = profile.findViewById<ImageView>(R.id.btnEditInfo)
+        btnEditInfo.setOnClickListener {
+            val bottomSheet = ProfileText()
+            bottomSheet.show(parentFragmentManager, "ProfileText")
+        }
 
-                scrollview.apply {
+        scrollview.apply {
             translationY = 100f
             alpha = 0f
 
