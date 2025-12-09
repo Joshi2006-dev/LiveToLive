@@ -95,7 +95,6 @@ class HidrateFragment : Fragment() {
         val objetivo = binding.txtObjetivo
         val imgBtnVolver = binding.btnBack
 
-
         objetivo.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()
 
         binding.btnEditarObjetivo.setOnClickListener {
@@ -106,7 +105,6 @@ class HidrateFragment : Fragment() {
         imgBtnVolver.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
 
         LitrosTomados.text = sharedPreferencesApp.getFloat("HidratationProgress").toString()
 

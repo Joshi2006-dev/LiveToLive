@@ -43,30 +43,30 @@ import kotlin.math.sqrt
 class PhysicalFragment : Fragment(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
-    private var stepSensor: Sensor? = null  // Sensor de pasos (del video)
-    private var accelerometer: Sensor? = null  // Acelerómetro para detección alternativa (del video)
+    private var stepSensor: Sensor? = null
+    private var accelerometer: Sensor? = null
     private var ultimoPasoTime = 0L
-    private var magnitudPrevia = 0f  // Para detectar picos en acelerómetro
-    private var pasosIniciales = 0  // Para TYPE_STEP_COUNTER
-
+    private var magnitudPrevia = 0f
+    private var pasosIniciales = 0
     private var pasosPrev = 0
     private var distanciaPrev = 0.0
     private var caloriasPrev = 0
-
     private lateinit var txtPasos: TextView
     private lateinit var txtDistancia: TextView
-    private lateinit var txtCalorias: TextView
+    private lateinit var txtKcal: TextView
     private lateinit var txtRacha: TextView
-    private lateinit var txtPasosTotales: TextView
-    private lateinit var txtPorcentaje: TextView
-    private lateinit var txtKcalObjetivo: TextView
-    private lateinit var txtDistanceGoal: TextView
     private lateinit var circular: CircularProgressBar
+    private lateinit var circularDistancia: CircularProgressBar
+    private lateinit var circularCalorias: CircularProgressBar
+    private lateinit var txtPorcentajeProgreso: TextView
+    private lateinit var txtDistanciaObj: TextView
+    private lateinit var txtPasosObj: TextView
+    private lateinit var txtKcalObj: TextView
     private lateinit var barraProgreso: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var barChart: BarChart
     private lateinit var adp: previousAdapter
-    private lateinit var rachaIcon: LottieAnimationView
+    private lateinit var rachaIcon: ImageView
     private var pasosHoy = 0
     private var objetivoPasos = 6000
     private var objetivoDistancia = 3.0
@@ -81,19 +81,20 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     ): View? {
         val phy = inflater.inflate(R.layout.fragment_physical, container, false)
 
-        // Tus inicializaciones existentes
         val scroller = phy.findViewById<ScrollView>(R.id.physicalScroll)
         barraProgreso = phy.findViewById(R.id.progressBarPhy)
-//        circular = phy.findViewById(R.id.circularProgressBar)
-//        rachaIcon = phy.findViewById(R.id.imgStreak)
-//        txtPasos = phy.findViewById(R.id.contadorpasos)
-//        txtDistancia = phy.findViewById(R.id.txtDistance)
-//        txtCalorias = phy.findViewById(R.id.txtCalBurn)
-//        txtRacha = phy.findViewById(R.id.txtStreakCount)
-//        txtPasosTotales = phy.findViewById(R.id.pasos_totales)
-//        txtPorcentaje = phy.findViewById(R.id.porcentaje)
-//        txtKcalObjetivo = phy.findViewById(R.id.txtKcalObjetivo)
-//        txtDistanceGoal = phy.findViewById(R.id.distanceGoal)
+        circular = phy.findViewById(R.id.circularProgressBar)
+        circularDistancia = phy.findViewById(R.id.circularProgressBarDistancia)
+        circularCalorias = phy.findViewById(R.id.circularProgressBarCalorias)
+        txtPorcentajeProgreso = phy.findViewById(R.id.txtPorcentajeProgreso)
+        rachaIcon = phy.findViewById(R.id.imgStreak)
+        txtPasos = phy.findViewById(R.id.txtPasos)
+        txtDistancia = phy.findViewById(R.id.txtDistancia)
+        txtKcal = phy.findViewById(R.id.txtKcal)
+        txtRacha = phy.findViewById(R.id.txtStreakCount)
+        txtDistanciaObj = phy.findViewById(R.id.txtDistanciaObj)
+        txtPasosObj = phy.findViewById(R.id.txtPasosObj)
+        txtKcalObj = phy.findViewById(R.id.txtKcalObj)
 
         scroller.apply {
             translationY = -100f
@@ -108,15 +109,6 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         cargarObjetivos()
 
         phy.findViewById<RelativeLayout>(R.id.LayProgress).setOnClickListener { mostrarDialogObjetivo("pasos") }
-//        (phy.findViewById<TextView>(R.id.txtLabelCalBurn).parent as? View)?.setOnClickListener { mostrarDialogObjetivo("calorias") }
-//        (phy.findViewById<TextView>(R.id.txtDistanceLabel).parent as? View)?.setOnClickListener { mostrarDialogObjetivo("distancia") }
-
-        // Simulación para pruebas (del video)
-//        phy.findViewById<TextView>(R.id.contadorpasos).setOnLongClickListener {
-//            pasosHoy += 100
-//            actualizarUI()
-//            true
-//        }
 
         recyclerView = phy.findViewById(R.id.historial)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -128,7 +120,6 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         configurarBarChart()
         cargarGraficaSemanal()
 
-        // Inicialización del sensor (del video)
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) ?: sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -152,7 +143,6 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         return phy
     }
 
-    // Permisos (del video)
     private fun verificarPermisosSensor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
@@ -209,6 +199,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         super.onPause()
         sensorManager.unregisterListener(this)
         guardarDatosHoy()
+        guardarObjetivos()
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -234,7 +225,6 @@ class PhysicalFragment : Fragment(), SensorEventListener {
                 }
             }
             Sensor.TYPE_ACCELEROMETER -> {
-                // Detección alternativa con acelerómetro (del video)
                 val x = event.values[0]
                 val y = event.values[1]
                 val z = event.values[2]
@@ -242,7 +232,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
                 val delta = magnitud - magnitudPrevia
                 magnitudPrevia = magnitud
 
-                if (delta > 6) {  // Umbral para detectar "paso" (ajusta según pruebas)
+                if (delta > 6) {
                     val currentTime = System.currentTimeMillis()
                     if (currentTime - ultimoPasoTime > 500) {
                         pasosHoy++
@@ -259,7 +249,6 @@ class PhysicalFragment : Fragment(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
-    // Tus funciones existentes (sin cambios)
     private fun cargarObjetivos() {
         val prefs = getPrefs()
         objetivoPasos = prefs.getInt("objetivoPasos", 6000)
@@ -289,7 +278,12 @@ class PhysicalFragment : Fragment(), SensorEventListener {
             val nuevoValor = input.text.toString().toDoubleOrNull()
             if (nuevoValor != null && nuevoValor > 0) {
                 when (tipo) {
-                    "pasos" -> objetivoPasos = nuevoValor.toInt()
+                    "pasos" -> {
+                        objetivoPasos = nuevoValor.toInt()
+
+                        objetivoDistancia = (objetivoPasos * 0.6) / 1000.0
+                        objetivoCalorias = (objetivoPasos * 0.04).toInt()
+                    }
                     "calorias" -> objetivoCalorias = nuevoValor.toInt()
                     "distancia" -> objetivoDistancia = nuevoValor
                 }
@@ -308,11 +302,8 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         for (i in 6 downTo 0) {
             val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -i) }
             val fecha = dateFormat.format(calendar.time)
-            // Si no existe la key progreso_<fecha>, generamos un valor visual (solo para pruebas)
             if (!prefs.contains("progreso_$fecha")) {
-                // Genera progreso entre 20 a 110 (si >100 lo recortamos al 100)
                 val progreso = (20 + random.nextInt(90)).coerceAtMost(100)
-                // Distribuimos pasos aproximados en función del objetivo
                 val pasosAprox = (objetivoPasos * (progreso / 100.0)).toInt()
                 val distanciaAprox = (pasosAprox * 0.6) / 1000.0
                 val caloriasAprox = (pasosAprox * 0.04).toInt()
@@ -413,21 +404,24 @@ class PhysicalFragment : Fragment(), SensorEventListener {
 
     private fun actualizarUI() {
         txtPasos.text = pasosHoy.toString()
-        txtDistancia.text = String.format("%.2f km", calcularDistancia())
-        txtCalorias.text = "${calcularCalorias()} kcal"
-        txtPasosTotales.text = "/$objetivoPasos"
-        txtPorcentaje.text = "${(pasosHoy.toFloat() / objetivoPasos * 100).toInt()}%"
-        txtKcalObjetivo.text = "/ $objetivoCalorias kcal"
-        txtDistanceGoal.text = "/ ${String.format("%.1f", objetivoDistancia)} km"
+        txtDistancia.text = String.format("%.2f", calcularDistancia())
+        txtKcal.text = calcularCalorias().toString()
+        txtDistanciaObj.text = "/${String.format("%.1f", objetivoDistancia)} km"
+        txtPasosObj.text = "/$objetivoPasos pasos"
+        txtKcalObj.text = "/$objetivoCalorias kcal"
 
         circular.progressMax = objetivoPasos.toFloat()
-        circular.setProgressWithAnimation(pasosHoy.toFloat(),
-            circular.progressMax.toLong(), AccelerateDecelerateInterpolator())
+        circular.setProgressWithAnimation(pasosHoy.toFloat(), circular.progressMax.toLong(), AccelerateDecelerateInterpolator())
+        circularDistancia.progressMax = (objetivoDistancia * 1000).toFloat()
+        circularDistancia.setProgressWithAnimation((calcularDistancia() * 1000).toFloat(), circularDistancia.progressMax.toLong(), AccelerateDecelerateInterpolator())
+        circularCalorias.progressMax = objetivoCalorias.toFloat()
+        circularCalorias.setProgressWithAnimation(calcularCalorias().toFloat(), circularCalorias.progressMax.toLong(), AccelerateDecelerateInterpolator())
+
+        txtPorcentajeProgreso.text = "${calcularProgresoTotal().toInt()}%"
         barraProgreso.progress = calcularProgresoTotal().toInt()
 
         txtRacha.text = obtenerRacha().toString()
-        rachaIcon.setAnimation(if (yaSumoRachaHoy()) R.raw.flameonn else R.raw.flameoff)
-        if (yaSumoRachaHoy()) rachaIcon.playAnimation()
+        rachaIcon.setImageResource(if (calcularProgresoTotal() >= 100) R.drawable.livetolive else R.drawable.flamaapagada)
     }
 
     private fun calcularDistancia(): Double = (pasosHoy * 0.6) / 1000
@@ -443,29 +437,24 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     private fun verificarMetasIndividuales() {
         val fecha = fechaHoy()
 
-        // Detectamos cruce de pasos
         if (pasosPrev < objetivoPasos && pasosHoy >= objetivoPasos) {
             mostrarPopupFelicitacion("¡Objetivo de pasos cumplido!")
         }
 
-        // Distancia
         val distanciaHoy = calcularDistancia()
         if (distanciaPrev < objetivoDistancia && distanciaHoy >= objetivoDistancia) {
             mostrarPopupFelicitacion("¡Objetivo de distancia cumplido!")
         }
 
-        // Calorías
         val caloriasHoy = calcularCalorias()
         if (caloriasPrev < objetivoCalorias && caloriasHoy >= objetivoCalorias) {
             mostrarPopupFelicitacion("¡Objetivo de calorías cumplido!")
         }
 
-        // Actualiza prev para la próxima verificación
         pasosPrev = pasosHoy
         distanciaPrev = distanciaHoy
         caloriasPrev = caloriasHoy
     }
-
 
     private fun mostrarPopupFelicitacion(mensaje: String) {
         AlertDialog.Builder(requireContext())
@@ -491,8 +480,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
             .putInt("progreso_${fechaHoy()}", 100)
             .apply()
         txtRacha.text = nueva.toString()
-        rachaIcon.setAnimation(R.raw.flameonn)
-        rachaIcon.playAnimation()
+        rachaIcon.setImageResource(R.drawable.livetolive)
     }
 
     private fun yaSumoRachaHoy(): Boolean {
@@ -519,7 +507,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
             }
 
             pasosHoy = 0
-            pasosIniciales = 0  // Reset para counter
+            pasosIniciales = 0
             prefs.edit()
                 .putInt("pasosHoy", 0)
                 .putString("ultimaFecha", hoy)
@@ -530,7 +518,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     private fun mostrarPopupRachaPerdida(racha: Int) {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_racha_perdida, null)
         val medallaImage = dialogView.findViewById<ImageView>(R.id.imgMedalla)
-        medallaImage.setImageResource(R.drawable.weight)
+        medallaImage.setImageResource(R.drawable.profile_example)
         AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setTitle("Racha Perdida")
@@ -542,13 +530,11 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     private fun cargarDatosHoy() {
         val prefs = getPrefs()
         pasosHoy = prefs.getInt("pasosHoy", prefs.getInt("pasos_${fechaHoy()}", 0))
-        // inicializamos prev para que no muestre popup al iniciar si ya superaste objetivo antes de abrir
         pasosPrev = pasosHoy
         distanciaPrev = prefs.getFloat("distancia_${fechaHoy()}", calcularDistancia().toFloat()).toDouble()
         caloriasPrev = prefs.getInt("calorias_${fechaHoy()}", calcularCalorias())
         actualizarUI()
     }
-
 
     private fun guardarDatosHoy() {
         val prefs = getPrefs()
@@ -562,7 +548,6 @@ class PhysicalFragment : Fragment(), SensorEventListener {
             .putString("ultimaFecha", fecha)
             .apply()
     }
-
 
     private fun fechaHoy(): String = dateFormat.format(Date())
 

@@ -46,43 +46,46 @@
             app:cardCornerRadius="15dp"
             app:cardElevation="0dp"
             android:layout_marginBottom="15dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/profilegradient"
                 android:padding="10dp">
 
                 <RelativeLayout
-                    android:layout_centerHorizontal="true"
                     android:id="@+id/rlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="20sp">
+
                     <ImageView
                         android:layout_width="130sp"
                         android:layout_height="130sp"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="@color/white"
                         android:layout_centerHorizontal="true"
-                        />
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/white" />
+
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgProfile"
                         android:layout_width="120sp"
                         android:layout_height="120sp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        app:shapeAppearanceOverlay="@style/roundedImageView"
                         android:src="@drawable/profile_example"
-                        android:layout_centerHorizontal="true"/>
+                        app:shapeAppearanceOverlay="@style/roundedImageView" />
+
                     <ImageView
                         android:id="@+id/btnEditPhoto"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/circle"
-                        android:padding="12dp"
+                        android:backgroundTint="#064751"
                         android:clickable="true"
                         android:focusable="true"
-                        android:src="@drawable/edit_icon"
-                        android:backgroundTint="#064751" />
+                        android:padding="12dp"
+                        android:src="@drawable/edit_icon" />
 
                 </RelativeLayout>
 
@@ -101,24 +104,26 @@
 
                 <LinearLayout
 
-                    android:layout_below="@+id/txtNombreUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_below="@+id/txtNombreUsuario"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true">
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="115dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="start"
                         android:orientation="vertical"
-                        android:padding="10dp"
-                        android:layout_gravity="start">
+                        android:padding="10dp">
+
                         <ImageView
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/pasosprofile"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/pasosprofile" />
 
                         <TextView
                             android:id="@+id/txtPasosTotales"
@@ -139,18 +144,20 @@
                             android:textColor="@color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="115dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:orientation="vertical"
-                        android:padding="10dp"
-                        android:layout_gravity="center">
+                        android:padding="10dp">
+
                         <ImageView
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/sleepprofile"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/sleepprofile" />
 
                         <TextView
                             android:id="@+id/txtHorasTotales"
@@ -171,18 +178,20 @@
                             android:textColor="@color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="115dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="right"
                         android:orientation="vertical"
-                        android:padding="10dp"
-                        android:layout_gravity="right">
+                        android:padding="10dp">
+
                         <ImageView
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/waterprofile"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/waterprofile" />
 
                         <TextView
                             android:id="@+id/txtLitrosTotales"
@@ -204,7 +213,7 @@
                             android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>
-            
+
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -220,14 +229,15 @@
                 android:text="Información Personal"
                 android:textColor="#064751"
                 android:textSize="16sp" />
+
             <ImageView
                 android:id="@+id/btnEditInfo"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="end"
-                android:src="@drawable/edit_icon2"/>
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/edit_icon2" />
 
 
         </LinearLayout>
@@ -488,7 +498,7 @@
                     <TextView
                         android:id="@+id/txtIMC"
                         android:layout_width="wrap_content"
-                        android:layout_height="55dp"
+                        android:layout_height="75dp"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/poppins_bold"
                         android:text="23.8"
@@ -497,7 +507,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
                         android:layout_below="@+id/txtIMC"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/poppins"
