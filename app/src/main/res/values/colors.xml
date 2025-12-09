@@ -7,5 +7,6 @@
     <color name="sleep">#c67d00</color>
     <color name="indicatorC">#0097b2</color>
     <color name="gray">#ABABAB</color>
+    <color name="green">#4CAF50</color>
     <color name="transparente">#00FFFFFF</color>
 </resources>

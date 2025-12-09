@@ -19,5 +19,4 @@
         android:title="Perfil"
         android:icon="@drawable/user"/>
 
-
 </menu>
