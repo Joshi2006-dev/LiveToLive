@@ -84,16 +84,16 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         // Tus inicializaciones existentes
         val scroller = phy.findViewById<ScrollView>(R.id.physicalScroll)
         barraProgreso = phy.findViewById(R.id.progressBarPhy)
-        circular = phy.findViewById(R.id.circularProgressBar)
-        rachaIcon = phy.findViewById(R.id.imgStreak)
-        txtPasos = phy.findViewById(R.id.contadorpasos)
-        txtDistancia = phy.findViewById(R.id.txtDistance)
-        txtCalorias = phy.findViewById(R.id.txtCalBurn)
-        txtRacha = phy.findViewById(R.id.txtStreakCount)
-        txtPasosTotales = phy.findViewById(R.id.pasos_totales)
-        txtPorcentaje = phy.findViewById(R.id.porcentaje)
-        txtKcalObjetivo = phy.findViewById(R.id.txtKcalObjetivo)
-        txtDistanceGoal = phy.findViewById(R.id.distanceGoal)
+//        circular = phy.findViewById(R.id.circularProgressBar)
+//        rachaIcon = phy.findViewById(R.id.imgStreak)
+//        txtPasos = phy.findViewById(R.id.contadorpasos)
+//        txtDistancia = phy.findViewById(R.id.txtDistance)
+//        txtCalorias = phy.findViewById(R.id.txtCalBurn)
+//        txtRacha = phy.findViewById(R.id.txtStreakCount)
+//        txtPasosTotales = phy.findViewById(R.id.pasos_totales)
+//        txtPorcentaje = phy.findViewById(R.id.porcentaje)
+//        txtKcalObjetivo = phy.findViewById(R.id.txtKcalObjetivo)
+//        txtDistanceGoal = phy.findViewById(R.id.distanceGoal)
 
         scroller.apply {
             translationY = -100f
@@ -108,15 +108,15 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         cargarObjetivos()
 
         phy.findViewById<RelativeLayout>(R.id.LayProgress).setOnClickListener { mostrarDialogObjetivo("pasos") }
-        (phy.findViewById<TextView>(R.id.txtLabelCalBurn).parent as? View)?.setOnClickListener { mostrarDialogObjetivo("calorias") }
-        (phy.findViewById<TextView>(R.id.txtDistanceLabel).parent as? View)?.setOnClickListener { mostrarDialogObjetivo("distancia") }
+//        (phy.findViewById<TextView>(R.id.txtLabelCalBurn).parent as? View)?.setOnClickListener { mostrarDialogObjetivo("calorias") }
+//        (phy.findViewById<TextView>(R.id.txtDistanceLabel).parent as? View)?.setOnClickListener { mostrarDialogObjetivo("distancia") }
 
         // Simulación para pruebas (del video)
-        phy.findViewById<TextView>(R.id.contadorpasos).setOnLongClickListener {
-            pasosHoy += 100
-            actualizarUI()
-            true
-        }
+//        phy.findViewById<TextView>(R.id.contadorpasos).setOnLongClickListener {
+//            pasosHoy += 100
+//            actualizarUI()
+//            true
+//        }
 
         recyclerView = phy.findViewById(R.id.historial)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
