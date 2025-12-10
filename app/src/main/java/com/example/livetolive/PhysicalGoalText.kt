@@ -31,7 +31,7 @@ class PhysicalGoalText(private val callback: ObjetivoCallback) : BottomSheetDial
             val pasosString = etxObjetivoPasos.text.toString()
             val pasos = pasosString.toIntOrNull()
 
-            if (pasos != null && pasos > 500) {
+            if (pasos != null && pasos > 5) {
                 callback.onGoalSet(pasos)
 
                 Toast.makeText(requireContext(), "Objetivo de pasos actualizado", Toast.LENGTH_SHORT).show()
