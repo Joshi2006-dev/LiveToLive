@@ -70,11 +70,11 @@ class SleepFragment : Fragment() {
         }
 
         // BOTÓN PARA ABRIR EL BOTTOMSHEET DE ALARMA
-        val btnSetAlarm = sleep.findViewById<Button>(R.id.btnSetAlarm)
-        btnSetAlarm.setOnClickListener {
-            val bottom = AlarmBottomSheet()
-            bottom.show(requireActivity().supportFragmentManager, "alarmBottom")
-        }
+//        val btnSetAlarm = sleep.findViewById<Button>(R.id.btnSetAlarm)
+//        btnSetAlarm.setOnClickListener {
+//            val bottom = AlarmBottomSheet()
+//            bottom.show(requireActivity().supportFragmentManager, "alarmBottom")
+//        }
 
         return sleep
     }
