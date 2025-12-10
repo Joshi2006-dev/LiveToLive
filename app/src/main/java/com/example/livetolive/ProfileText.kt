@@ -9,25 +9,16 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import android.app.Dialog
 
-private var Any?.isDraggable: Any
-    get() {
-        TODO()
-    }
-    set(value) {}
-private var Any?.peekHeight: Any
-    get() {
-        TODO()
-    }
-    set(value) {}
-private val BottomSheetDialogFragment?.behavior: Any
-    get() {
-        TODO()
-    }
+class ProfileText(private val callback: ProfileUpdateCallback) : BottomSheetDialogFragment() {
 
-class ProfileText : BottomSheetDialogFragment() {
-
-    private val viewModel: ProfileTextViewModel by viewModels()
+    private lateinit var etNombre: EditText
+    private lateinit var etPeso: EditText
+    private lateinit var etAltura: EditText
+    private lateinit var etEdad: EditText
+    private lateinit var etSexo: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,36 +26,39 @@ class ProfileText : BottomSheetDialogFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_profile_text, container, false)
 
-        val etxPeso = view.findViewById<EditText>(R.id.etxPeso)
-        val etxAltura = view.findViewById<EditText>(R.id.etxAltura)
-        val etxEdad = view.findViewById<EditText>(R.id.etxEdad)
-        val etxSexo = view.findViewById<EditText>(R.id.etxSexo)
+        etNombre = view.findViewById(R.id.etxNombre)
+        etPeso = view.findViewById(R.id.etxPeso)
+        etAltura = view.findViewById(R.id.etxAltura)
+        etEdad = view.findViewById(R.id.etxEdad)
+        etSexo = view.findViewById(R.id.etxSexo)
         val btnEditar = view.findViewById<Button>(R.id.btnEditar)
 
-        etxPeso.setText(sharedPreferencesApp.getFloat("Peso", 0f).toString())
-        etxAltura.setText(sharedPreferencesApp.getFloat("Altura", 0f).toString())
-        etxEdad.setText(sharedPreferencesApp.getInt("Edad", 0).toString())
-        etxSexo.setText(sharedPreferencesApp.getString("Sexo", ""))
+        etNombre.setText(sharedPreferencesApp.getString("Nombre", ""))
+        etPeso.setText(sharedPreferencesApp.getFloat("Peso", 0f).toString())
+        etAltura.setText(sharedPreferencesApp.getFloat("Altura", 0f).toString())
+        etEdad.setText(sharedPreferencesApp.getInt("Edad", 0).toString())
+        etSexo.setText(sharedPreferencesApp.getString("Sexo", ""))
 
         btnEditar.setOnClickListener {
-            val peso = etxPeso.text.toString().toFloatOrNull() ?: 0f
-            val altura = etxAltura.text.toString().toFloatOrNull() ?: 0f
-            val edad = etxEdad.text.toString().toIntOrNull() ?: 0
-            val sexo = etxSexo.text.toString()
+            val nombre = etNombre.text.toString()
+            val peso = etPeso.text.toString().toFloatOrNull()
+            val altura = etAltura.text.toString().toFloatOrNull()
+            val edad = etEdad.text.toString().toIntOrNull()
+            val sexo = etSexo.text.toString()
 
-            if (peso > 0 && altura > 0 && edad > 0 && sexo.isNotEmpty()) {
-                sharedPreferencesApp.edit()
-                    .putFloat("Peso", peso)
-                    .putFloat("Altura", altura)
-                    .putInt("Edad", edad)
-                    .putString("Sexo", sexo)
-                    .apply()
-
-                Toast.makeText(requireContext(), "Datos actualizados", Toast.LENGTH_SHORT).show()
-                dismiss()
-            } else {
-                Toast.makeText(requireContext(), "Completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
+            if (peso == null || altura == null || edad == null || nombre.isBlank() || sexo.isBlank()) {
+                Toast.makeText(context, "Por favor, completa todos los campos correctamente.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            sharedPreferencesApp.saveString("Nombre", nombre)
+            sharedPreferencesApp.saveFloat("Peso", peso)
+            sharedPreferencesApp.saveFloat("Altura", altura)
+            sharedPreferencesApp.saveInt("Edad", edad)
+            sharedPreferencesApp.saveString("Sexo", sexo)
+
+            callback.onProfileDataUpdated()
+            dismiss()
         }
 
         return view
@@ -72,28 +66,17 @@ class ProfileText : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val behavior = (dialog as? BottomSheetDialogFragment)?.behavior
-        behavior?.peekHeight = (resources.displayMetrics.heightPixels / 2)
-        behavior?.isDraggable = true
+        // Este es el método estándar para controlar el tamaño y comportamiento del BottomSheet
+        val dialog = dialog
+        if (dialog != null) {
+            val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            if (bottomSheet != null) {
+                val behavior = BottomSheetBehavior.from(bottomSheet)
+
+                behavior.peekHeight = resources.displayMetrics.heightPixels * 3 / 4
+                behavior.isDraggable = true
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
     }
-}
-
-private fun Unit.apply() {
-    TODO("Not yet implemented")
-}
-
-private fun Unit.putString(string: String, sexo: String) {
-    TODO("Not yet implemented")
-}
-
-private fun Unit.putInt(string: String, edad: Int) {
-    TODO("Not yet implemented")
-}
-
-private fun Unit.putFloat(string: String, peso: Float) {
-    TODO("Not yet implemented")
-}
-
-private fun sharedPreferencesApp.edit() {
-    TODO("Not yet implemented")
 }

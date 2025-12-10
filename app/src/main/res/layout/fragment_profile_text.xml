@@ -31,6 +31,27 @@
         android:textColorHint="@color/hidra"
         >
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etxNombre"  android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins"
+            android:hint="Nombre de Usuario"
+            android:inputType="textPersonName"
+            android:textColor="@color/hidra"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:counterTextColor="@color/hidra"
+        app:boxCornerRadiusTopStart="30dp"
+        android:textColorHint="@color/hidra"
+        >
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etxPeso"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,7 +60,7 @@
             android:inputType="numberDecimal"
             android:textColor="@color/hidra"
             android:textSize="14sp"
-            android:maxLength="3"/>
+            android:maxLength="5"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -62,7 +83,7 @@
             android:inputType="numberDecimal"
             android:textColor="@color/hidra"
             android:textSize="14sp"
-            android:maxLength="3"/>
+            android:maxLength="5"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -104,11 +125,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
-            android:hint="Sexo (H/M)"
+            android:hint="Sexo (Masculino/Femenino)"
             android:inputType="text"
             android:textColor="@color/hidra"
             android:textSize="14sp"
-            android:maxLength="3"/>
+            android:maxLength="9"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
