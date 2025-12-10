@@ -16,6 +16,7 @@ object sharedPreferencesApp {
 
     private fun setDefaultValues(){
         val alreadyInitialized=prefs.getBoolean("Init",false)
+        val hoy = System.currentTimeMillis()
         if(!alreadyInitialized){
             prefs.edit().apply{
                 //shared Preferences para los estados de los logros
@@ -47,12 +48,22 @@ object sharedPreferencesApp {
                 putFloat("Altura",0f)
                 putInt("Edad",0)
                 putString("Sexo","")
+
+                //shared Preferences para hacer la comparacion de dias y disparar insercciones automaticas
+                putLong("LastDayTimestamp", hoy)
                 apply()
             }
         }
     }
 
 
+    fun saveLastDay(timestamp: Long) {
+        prefs.edit { putLong("LastDayTimestamp", timestamp) }
+    }
+
+    fun getLastDay(): Long {
+        return prefs.getLong("LastDayTimestamp", 0L)
+    }
     fun saveBoolean(key: String, value: Boolean){
         prefs.edit { putBoolean(key, value) }
     }
