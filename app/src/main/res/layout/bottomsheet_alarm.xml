@@ -29,4 +29,16 @@
         android:backgroundTint="@color/sleep"
         android:fontFamily="@font/poppins_bold"
         android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnBorrarAlarma"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Borrar alarma"
+        android:textColor="@color/white"
+        android:backgroundTint="#D9534F"
+        android:layout_marginTop="10dp" />
+
+
+
 </LinearLayout>

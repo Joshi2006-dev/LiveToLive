@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- PERMISO NECESARIO PARA SERVICIO EN PRIMER PLANO -->
+    <!-- PERMISOS (estos SIEMPRE van fuera de <application>) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".MyApp"
@@ -16,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LiveToLive">
 
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -26,22 +29,29 @@
             </intent-filter>
         </activity>
 
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme" />
 
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <!-- RECEIVER (SOLO UNO) -->
+        <!-- este reciver es el va a disparar la arlarma  -->
         <receiver
             android:name=".AlarmReceiver"
             android:exported="false" />
 
-        <!-- SERVICIO EN PRIMER PLANO -->
+        <!-- y este la detiene -->
+        <receiver
+            android:name=".StopAlarmReceiver"
+            android:exported="false" />
+
+        <!-- servicio para que suene  -->
         <service
             android:name=".AlarmService"
             android:exported="false"
