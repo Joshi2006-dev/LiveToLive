@@ -1,6 +1,7 @@
 package com.example.livetolive
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -26,6 +28,7 @@ import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.RelativeLayout
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -40,7 +43,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.sqrt
 
-class PhysicalFragment : Fragment(), SensorEventListener {
+class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
     private lateinit var sensorManager: SensorManager
     private var stepSensor: Sensor? = null
@@ -67,14 +70,18 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     private lateinit var barChart: BarChart
     private lateinit var adp: previousAdapter
     private lateinit var rachaIcon: ImageView
-    private var pasosHoy = 0
-    private var objetivoPasos = 6000
+    private var dX = 0f
+    private var dY = 0f
+    private var lastAction = 0
+    private var pasosHoy: Int = sharedPreferencesApp.getInt("ActividadProgress")
+    private var objetivoPasos = 0
     private var objetivoDistancia = 3.0
     private var objetivoCalorias = 200
     private val PREFS = "fitness_data"
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 1001
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -95,6 +102,12 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         txtDistanciaObj = phy.findViewById(R.id.txtDistanciaObj)
         txtPasosObj = phy.findViewById(R.id.txtPasosObj)
         txtKcalObj = phy.findViewById(R.id.txtKcalObj)
+        val imgBtnVolver = phy.findViewById<ImageView>(R.id.BtnBackHomeAF)
+        val draggableCardView: CardView = phy.findViewById(R.id.cardViewDraggableStreak)
+
+        imgBtnVolver.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
         scroller.apply {
             translationY = -100f
@@ -139,6 +152,47 @@ class PhysicalFragment : Fragment(), SensorEventListener {
 
         verificarResetPorDia()
         cargarDatosHoy()
+
+        txtRacha.text = obtenerRacha().toString()
+        rachaIcon.setImageResource(if (calcularProgresoTotal() >= 100) R.drawable.livetolive else R.drawable.flamaapagada)
+
+        draggableCardView.setOnTouchListener { v, event ->
+            val parent = v.parent as View
+
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    dX = v.x - event.rawX
+                    dY = v.y - event.rawY
+                    lastAction = MotionEvent.ACTION_DOWN
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    val newX = event.rawX + dX
+                    val newY = event.rawY + dY
+
+                    val parentWidth = parent.width - v.width
+                    val parentHeight = parent.height - v.height
+
+                    val boundedX = Math.max(0f, Math.min(newX, parentWidth.toFloat()))
+                    val boundedY = Math.max(0f, Math.min(newY, parentHeight.toFloat()))
+
+                    v.animate()
+                        .x(boundedX)
+                        .y(boundedY)
+                        .setDuration(0)
+                        .start()
+
+                    lastAction = MotionEvent.ACTION_MOVE
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    if (lastAction == MotionEvent.ACTION_DOWN) {
+                    }
+                }
+                else -> return@setOnTouchListener false
+            }
+            return@setOnTouchListener true
+        }
 
         return phy
     }
@@ -206,7 +260,10 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         when (event?.sensor?.type) {
             Sensor.TYPE_STEP_COUNTER -> {
                 val pasosTotales = event.values[0].toInt()
-                if (pasosIniciales == 0) pasosIniciales = pasosTotales
+                if (pasosIniciales == 0) {
+                    pasosIniciales = sharedPreferencesApp.getInt("pasosIniciales", pasosTotales)  // Restaurar si existe, sino usar pasosTotales
+                    sharedPreferencesApp.saveInt("pasosIniciales", pasosIniciales)  // Guardar para persistencia
+                }
                 pasosHoy = pasosTotales - pasosIniciales
                 Log.d("PhysicalFragment", "Pasos counter: $pasosHoy")
                 actualizarUI()
@@ -251,7 +308,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
 
     private fun cargarObjetivos() {
         val prefs = getPrefs()
-        objetivoPasos = prefs.getInt("objetivoPasos", 6000)
+        objetivoPasos = prefs.getInt("objetivoPasos", 3000)
         objetivoDistancia = prefs.getFloat("objetivoDistancia", 3.0f).toDouble()
         objetivoCalorias = prefs.getInt("objetivoCalorias", 200)
     }
@@ -265,34 +322,10 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     }
 
     private fun mostrarDialogObjetivo(tipo: String) {
-        val builder = AlertDialog.Builder(requireContext())
-        val input = EditText(requireContext())
-        input.hint = when (tipo) {
-            "pasos" -> "Nuevo objetivo de pasos (ej., 6000)"
-            "calorias" -> "Nuevo objetivo de calorías (ej., 200)"
-            "distancia" -> "Nuevo objetivo de distancia en km (ej., 3.0)"
-            else -> ""
+        if (tipo == "pasos") {
+            val bottomSheet = PhysicalGoalText(this)
+            bottomSheet.show(parentFragmentManager, "PhysicalGoalText")
         }
-        builder.setView(input)
-        builder.setPositiveButton("Guardar") { _, _ ->
-            val nuevoValor = input.text.toString().toDoubleOrNull()
-            if (nuevoValor != null && nuevoValor > 0) {
-                when (tipo) {
-                    "pasos" -> {
-                        objetivoPasos = nuevoValor.toInt()
-
-                        objetivoDistancia = (objetivoPasos * 0.6) / 1000.0
-                        objetivoCalorias = (objetivoPasos * 0.04).toInt()
-                    }
-                    "calorias" -> objetivoCalorias = nuevoValor.toInt()
-                    "distancia" -> objetivoDistancia = nuevoValor
-                }
-                guardarObjetivos()
-                actualizarUI()
-            }
-        }
-        builder.setNegativeButton("Cancelar", null)
-        builder.show()
     }
 
     private fun rellenarHistorialSiVacio() {
@@ -344,7 +377,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
 
     private fun cargarDatosDeDia(fecha: String) {
         val prefs = getPrefs()
-        pasosHoy = prefs.getInt("pasos_$fecha", 0)
+        pasosHoy = sharedPreferencesApp.getInt("ActividadProgress", 0)
         actualizarUI()
     }
 
@@ -409,6 +442,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         txtDistanciaObj.text = "/${String.format("%.1f", objetivoDistancia)} km"
         txtPasosObj.text = "/$objetivoPasos pasos"
         txtKcalObj.text = "/$objetivoCalorias kcal"
+        sharedPreferencesApp.saveInt("ActividadProgress", pasosHoy)
 
         circular.progressMax = objetivoPasos.toFloat()
         circular.setProgressWithAnimation(pasosHoy.toFloat(), circular.progressMax.toLong(), AccelerateDecelerateInterpolator())
@@ -435,33 +469,37 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     }
 
     private fun verificarMetasIndividuales() {
-        val fecha = fechaHoy()
 
         if (pasosPrev < objetivoPasos && pasosHoy >= objetivoPasos) {
-            mostrarPopupFelicitacion("¡Objetivo de pasos cumplido!")
+            mostrarPopupPersonalizado("¡Objetivo de pasos cumplido!", R.raw.success)
         }
-
-        val distanciaHoy = calcularDistancia()
-        if (distanciaPrev < objetivoDistancia && distanciaHoy >= objetivoDistancia) {
-            mostrarPopupFelicitacion("¡Objetivo de distancia cumplido!")
-        }
-
-        val caloriasHoy = calcularCalorias()
-        if (caloriasPrev < objetivoCalorias && caloriasHoy >= objetivoCalorias) {
-            mostrarPopupFelicitacion("¡Objetivo de calorías cumplido!")
-        }
-
         pasosPrev = pasosHoy
-        distanciaPrev = distanciaHoy
-        caloriasPrev = caloriasHoy
     }
 
-    private fun mostrarPopupFelicitacion(mensaje: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("¡Felicidades!")
-            .setMessage(mensaje)
-            .setPositiveButton("¡Genial!", null)
-            .show()
+    private fun mostrarPopupPersonalizado(mensaje: String, animacion: Int) {
+        val dialogView = layoutInflater.inflate(R.layout.alertpopup, null)
+
+        val btnDialog = dialogView.findViewById<Button>(R.id.btnEntendido)
+        val infoPopup = dialogView.findViewById<TextView>(R.id.txtAviso)
+        val titlePopup = dialogView.findViewById<TextView>(R.id.txtHeaderText)
+        val iconPopup = dialogView.findViewById<LottieAnimationView>(R.id.AlertIcon)
+
+        iconPopup.setAnimation(animacion)
+        iconPopup.loop(false)
+        iconPopup.playAnimation()
+
+        titlePopup.text = "¡FELICIDADES!"
+        infoPopup.text = mensaje
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        dialog.show()
+
+        btnDialog.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     private fun verificarMetaTotal() {
@@ -471,14 +509,11 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     }
 
     private fun sumarRacha() {
-        val prefs = getPrefs()
         val nueva = obtenerRacha() + 1
-        prefs.edit()
-            .putInt("racha", nueva)
-            .putString("ultimaFecha", fechaHoy())
-            .putBoolean("sumadoHoy", true)
-            .putInt("progreso_${fechaHoy()}", 100)
-            .apply()
+        sharedPreferencesApp.saveInt("racha", nueva)
+        sharedPreferencesApp.saveString("ultimaFecha", fechaHoy())
+        sharedPreferencesApp.saveBoolean("sumadoHoy", true)
+        sharedPreferencesApp.saveInt("progreso_${fechaHoy()}", 100)
         txtRacha.text = nueva.toString()
         rachaIcon.setImageResource(R.drawable.livetolive)
     }
@@ -488,7 +523,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
         return prefs.getString("ultimaFecha", "") == fechaHoy() && prefs.getBoolean("sumadoHoy", false)
     }
 
-    private fun obtenerRacha(): Int = getPrefs().getInt("racha", 0)
+    private fun obtenerRacha(): Int = sharedPreferencesApp.getInt("racha", 0)
 
     private fun verificarResetPorDia() {
         val prefs = getPrefs()
@@ -529,7 +564,7 @@ class PhysicalFragment : Fragment(), SensorEventListener {
 
     private fun cargarDatosHoy() {
         val prefs = getPrefs()
-        pasosHoy = prefs.getInt("pasosHoy", prefs.getInt("pasos_${fechaHoy()}", 0))
+        pasosHoy = sharedPreferencesApp.getInt("ActividadProgress", 0)
         pasosPrev = pasosHoy
         distanciaPrev = prefs.getFloat("distancia_${fechaHoy()}", calcularDistancia().toFloat()).toDouble()
         caloriasPrev = prefs.getInt("calorias_${fechaHoy()}", calcularCalorias())
@@ -552,4 +587,14 @@ class PhysicalFragment : Fragment(), SensorEventListener {
     private fun fechaHoy(): String = dateFormat.format(Date())
 
     private fun getPrefs() = requireContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+
+    override fun onGoalSet(nuevoObjetivoPasos: Int) {
+        objetivoPasos = nuevoObjetivoPasos
+        objetivoDistancia = (objetivoPasos * 0.6) / 1000.0
+        objetivoCalorias = (objetivoPasos * 0.04).toInt()
+
+        guardarObjetivos()
+        actualizarUI()
+    }
 }
