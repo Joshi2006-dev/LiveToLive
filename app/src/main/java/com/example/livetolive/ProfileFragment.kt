@@ -10,6 +10,10 @@ import android.widget.ScrollView
 import android.widget.TextView
 import kotlin.math.round
 
+interface ProfileUpdateCallback {
+    fun onProfileDataUpdated()
+}
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -20,10 +24,17 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), ProfileUpdateCallback {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var peso: TextView
+    private lateinit var altura: TextView
+    private lateinit var edad: TextView
+    private lateinit var sexo: TextView
+    private lateinit var nombre: TextView
+    private lateinit var imc: TextView
+    private lateinit var indicador: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,43 +50,21 @@ class ProfileFragment : Fragment() {
     ): View? {
         val profile= inflater.inflate(R.layout.fragment_profile, container, false)
         val scrollview=profile.findViewById<ScrollView>(R.id.scroller)
-        val peso=profile.findViewById<TextView>(R.id.txtPeso)
-        val altura=profile.findViewById<TextView>(R.id.txtAltura)
-        val edad=profile.findViewById<TextView>(R.id.txtEdad)
-        val sexo=profile.findViewById<TextView>(R.id.txtSexo)
-        val nombre=profile.findViewById<TextView>(R.id.txtNombreUsuario)
-        val imc=profile.findViewById<TextView>(R.id.txtIMC)
-        val indicador=profile.findViewById<TextView>(R.id.txtIMCindicator)
+        val btnVolver=profile.findViewById<ImageView>(R.id.btnVolver)
 
-        peso.text=sharedPreferencesApp.getFloat("Peso").toString()+" Kg"
-        altura.text=(sharedPreferencesApp.getFloat("Altura")/100).toString()+" m"
-        edad.text=sharedPreferencesApp.getInt("Edad").toString()+" años"
-        sexo.text=sharedPreferencesApp.getString("Sexo")
-        nombre.text=sharedPreferencesApp.getString("Nombre")
-        val pesocalc = sharedPreferencesApp.getFloat("Peso", 0f)
-        val alturaCm = sharedPreferencesApp.getFloat("Altura", 0f)
-        val alturaM = alturaCm / 100
-        val IMCcalc: Float = pesocalc / (alturaM * alturaM)
-        val IMCRedondeado = round(IMCcalc * 10) / 10
-        imc.text=IMCRedondeado.toString()
+        peso = profile.findViewById(R.id.txtPeso)
+        altura = profile.findViewById(R.id.txtAltura)
+        edad = profile.findViewById(R.id.txtEdad)
+        sexo = profile.findViewById(R.id.txtSexo)
+        nombre = profile.findViewById(R.id.txtNombreUsuario)
+        imc = profile.findViewById(R.id.txtIMC)
+        indicador = profile.findViewById(R.id.txtIMCindicator)
 
-        if (IMCRedondeado < 18.5) {
-            indicador.text = "PESO BAJO"
-        }else if (IMCRedondeado in 18.5..24.9) {
-            indicador.text = "PESO NORMAL"
-        }else if (IMCRedondeado in 25.0..29.9) {
-            indicador.text = "SOBREPESO"
-        }else if (IMCRedondeado in 30.0..34.9) {
-            indicador.text = "OBESIDAD TIPO I"
-        }else if (IMCRedondeado in 35.0..39.9) {
-            indicador.text = "OBESIDAD TIPO II"
-        }else if (IMCRedondeado >= 40) {
-            indicador.text = "OBESIDAD TIPO III y IV"
-        }
+        loadProfileData()
 
         val btnEditInfo = profile.findViewById<ImageView>(R.id.btnEditInfo)
         btnEditInfo.setOnClickListener {
-            val bottomSheet = ProfileText()
+            val bottomSheet = ProfileText(this)
             bottomSheet.show(parentFragmentManager, "ProfileText")
         }
 
@@ -89,7 +78,49 @@ class ProfileFragment : Fragment() {
                 .setDuration(500)
                 .start()
         }
+
+        btnVolver.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
         return profile
+    }
+
+    private fun loadProfileData() {
+        val pesocalc = sharedPreferencesApp.getFloat("Peso", 0f)
+        val alturaCm = sharedPreferencesApp.getFloat("Altura", 0f)
+        val alturaM = alturaCm / 100
+
+        // Uso de String.format() con los valores correctos
+        peso.text = String.format("%.1f Kg", pesocalc)
+        altura.text = String.format("%.2f m", alturaM)
+        edad.text = sharedPreferencesApp.getInt("Edad").toString() + " años"
+        sexo.text = sharedPreferencesApp.getString("Sexo")
+        nombre.text = sharedPreferencesApp.getString("Nombre")
+
+        // Cálculo y clasificación del IMC
+        var IMCRedondeado = 0f
+        // Prevención de división por cero
+        if (alturaM > 0) {
+            val IMCcalc: Float = pesocalc / (alturaM * alturaM)
+            IMCRedondeado = round(IMCcalc * 10) / 10
+        }
+
+        imc.text = IMCRedondeado.toString()
+
+        when (IMCRedondeado) {
+            in 0.0f..18.4f -> indicador.text = "PESO BAJO"
+            in 18.5f..24.9f -> indicador.text = "PESO NORMAL"
+            in 25.0f..29.9f -> indicador.text = "SOBREPESO"
+            in 30.0f..34.9f -> indicador.text = "OBESIDAD TIPO I"
+            in 35.0f..39.9f -> indicador.text = "OBESIDAD TIPO II"
+            in 40.0f..Float.MAX_VALUE -> indicador.text = "OBESIDAD TIPO III y IV"
+            else -> indicador.text = "DATO INVÁLIDO"
+        }
+    }
+
+    override fun onProfileDataUpdated() {
+        loadProfileData()
     }
 
     companion object {
