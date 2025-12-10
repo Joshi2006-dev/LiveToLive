@@ -37,6 +37,12 @@ object sharedPreferencesApp {
                 //shared Preferences para los objetivos y progresos de actividad fisica
                 putInt("ActividadGoal",0)
                 putInt("ActividadProgress",0)
+                putInt("racha", 0)
+                putBoolean("sumadoHoy", false)
+                putString("ultimaFecha", "")
+                putInt("objetivoPasos", 3000)
+                putFloat("objetivoDistancia", 3.0f)
+                putInt("objetivoCalorias", 200)
 
                 //shared Preferences para los objetivos y progresos de sueño
                 putInt("SleepGoal",0)
@@ -55,7 +61,6 @@ object sharedPreferencesApp {
             }
         }
     }
-
 
     fun saveLastDay(timestamp: Long) {
         prefs.edit { putLong("LastDayTimestamp", timestamp) }
@@ -86,7 +91,6 @@ object sharedPreferencesApp {
     fun getString(key: String, default: String=""): String? {
         return prefs.getString(key, default)
     }
-
     fun saveInt(key: String, value: Int){
         prefs.edit { putInt(key, value) }
     }

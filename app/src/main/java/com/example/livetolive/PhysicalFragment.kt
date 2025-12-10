@@ -511,16 +511,14 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     private fun sumarRacha() {
         val nueva = obtenerRacha() + 1
         sharedPreferencesApp.saveInt("racha", nueva)
-        sharedPreferencesApp.saveString("ultimaFecha", fechaHoy())
+        sharedPreferencesApp.saveString("ultimaFechaStreak", fechaHoy())
         sharedPreferencesApp.saveBoolean("sumadoHoy", true)
-        sharedPreferencesApp.saveInt("progreso_${fechaHoy()}", 100)
         txtRacha.text = nueva.toString()
         rachaIcon.setImageResource(R.drawable.livetolive)
     }
 
     private fun yaSumoRachaHoy(): Boolean {
-        val prefs = getPrefs()
-        return prefs.getString("ultimaFecha", "") == fechaHoy() && prefs.getBoolean("sumadoHoy", false)
+        return sharedPreferencesApp.getBoolean("sumadoHoy", false)
     }
 
     private fun obtenerRacha(): Int = sharedPreferencesApp.getInt("racha", 0)
@@ -536,10 +534,10 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
             if (progresoAyer < 100 && rachaPerdida > 0) {
                 mostrarPopupRachaPerdida(rachaPerdida)
-                prefs.edit().putInt("racha", 0).apply()
-            } else if (progresoAyer >= 100) {
-                prefs.edit().putBoolean("sumadoHoy", false).apply()
+                sharedPreferencesApp.saveInt("racha", 0)
             }
+
+            sharedPreferencesApp.saveBoolean("sumadoHoy", false)
 
             pasosHoy = 0
             pasosIniciales = 0
