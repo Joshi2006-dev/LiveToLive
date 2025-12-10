@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.R.attr.progressDrawable
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 private const val ARG_PARAM1 = "param1"
@@ -31,6 +35,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    private lateinit var miDb: AppDatabase
+    private fun isNewDay(lastTimestamp: Long): Boolean {
+        val calendarLast = Calendar.getInstance().apply { timeInMillis = lastTimestamp }
+        val calendarToday = Calendar.getInstance()
+        return calendarToday.get(Calendar.YEAR) != calendarLast.get(Calendar.YEAR) ||
+                calendarToday.get(Calendar.DAY_OF_YEAR) != calendarLast.get(Calendar.DAY_OF_YEAR)
+    }
     private var param1: String? = null
     private var param2: String? = null
 
@@ -42,13 +53,16 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val home =inflater.inflate(R.layout.fragment_home, container, false)
-
+        miDb = AppDatabase.getDatabase(requireContext())
+        val lastDay = sharedPreferencesApp.getLastDay()
+        val today = Calendar.getInstance().timeInMillis
         //Cartas
         val carta1=home.findViewById<CardView>(R.id.card)
         val carta2=home.findViewById<CardView>(R.id.card2)
@@ -81,6 +95,7 @@ class HomeFragment : Fragment() {
         val scrollview=home.findViewById<ScrollView>(R.id.scroller)
         val diasSemana = obtenerDiasSemana()
         val hoy = numeroDiaHoy()
+        var porcentajeAgua: Int=0
 
         //Cargar datos del calendario
         mesActual.text=mesActual().uppercase()
@@ -114,9 +129,35 @@ class HomeFragment : Fragment() {
         }
 
         //Carga los datos que estan en el sharedPreferences Dentro de las cardvius
-        txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
-        val porcentajeAgua= (sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100
-        txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
+
+        if (isNewDay(lastDay)) {
+            lifecycleScope.launch {
+                val cal = Calendar.getInstance()
+                cal.timeInMillis = lastDay
+                cal.set(Calendar.HOUR_OF_DAY, 12)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+
+                val registro = Hidratacion(
+                    litrosObjetivo = sharedPreferencesApp.getFloat("HidrateGoal"),
+                    litrosRegistrados = sharedPreferencesApp.getFloat("HidratationProgress"),
+                    fecha = cal.time
+                )
+                miDb.hidratacionDao().insert(registro)
+                sharedPreferencesApp.saveFloat("HidratationProgress",0f)
+                sharedPreferencesApp.saveLastDay(today)
+
+                txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
+                porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
+                txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
+            }
+        }else{
+            txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
+            porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
+            txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
+        }
+
 
         txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
         val porcentajeSueño= (sharedPreferencesApp.getInt("SleepProgress")/sharedPreferencesApp.getInt("SleepGoal"))*100
