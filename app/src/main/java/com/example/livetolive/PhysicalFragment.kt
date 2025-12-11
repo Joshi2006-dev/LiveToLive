@@ -40,6 +40,9 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.sqrt
@@ -47,6 +50,9 @@ import kotlin.math.sqrt
 class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
     private lateinit var sensorManager: SensorManager
+    private lateinit var db: AppDatabase
+    val colorConstante = R.color.pshy
+    val listaPrevious = mutableListOf<previousDataClass>()
     private var stepSensor: Sensor? = null
     private var accelerometer: Sensor? = null
     private var ultimoPasoTime = 0L
@@ -126,7 +132,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
         recyclerView = phy.findViewById(R.id.historial)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rellenarHistorialSiVacio()
         cargarHistorial()
         recyclerView.scrollToPosition(adp.itemCount - 1)
 
@@ -354,27 +359,40 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     }
 
     private fun cargarHistorial() {
-        val dias = mutableListOf<previousDataClass>()
-        val hoy = Date()
+        db = AppDatabase.getDatabase(requireContext())
+        CoroutineScope(Dispatchers.IO).launch {
+            db.actividadDao().getAll().collect { registros ->
+                val listaTemp = mutableListOf<previousDataClass>()
 
-        for (i in 6 downTo 0) {
-            val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -i) }
-            val fecha = dateFormat.format(calendar.time)
-            val mes = SimpleDateFormat("MMMM", Locale.getDefault()).format(calendar.time).capitalize()
-            val dia = calendar.get(Calendar.DAY_OF_MONTH).toString()
-            val progreso = getPrefs().getInt("progreso_$fecha", 0)
-            val color = R.color.pshy
-            dias.add(previousDataClass(mes, dia, progreso, color))
+                registros.forEach { h ->
+                    val (mes, dia) = formatFecha(h.fecha)
+                    val progreso = ((h.pasosRegistrados / h.pasosObjetivo) * 100).toInt()
+                    listaTemp.add(previousDataClass(mes, dia, progreso, colorConstante))
+                }
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    listaPrevious.clear()
+                    listaPrevious.addAll(listaTemp)
+                    adp.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(adp.itemCount - 1)
+                }
+            }
         }
 
-        adp = previousAdapter(dias)
+        adp = previousAdapter(listaPrevious)
         recyclerView.adapter = adp
 
-        adp.setOnItemClickListener { position: Int ->
-            val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -(6 - position)) }
-            val fechaSeleccionada = dateFormat.format(calendar.time)
-            cargarDatosDeDia(fechaSeleccionada)
-        }
+//        adp.setOnItemClickListener { position: Int ->
+//            val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -(6 - position)) }
+//            val fechaSeleccionada = dateFormat.format(calendar.time)
+//            cargarDatosDeDia(fechaSeleccionada)
+//        }
+    }
+
+    fun formatFecha(date: Date): Pair<String, String> {
+        val mes = SimpleDateFormat("MMMM", Locale("es", "ES")).format(date) // "Noviembre"
+        val dia = SimpleDateFormat("d", Locale("es", "ES")).format(date)    // "25"
+        return Pair(mes, dia)
     }
 
     private fun cargarDatosDeDia(fecha: String) {

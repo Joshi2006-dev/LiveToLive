@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val home =inflater.inflate(R.layout.fragment_home, container, false)
         miDb = AppDatabase.getDatabase(requireContext())
+        var porcentajeActividad:Int=0
         val lastDay = sharedPreferencesApp.getLastDay()
         val today = Calendar.getInstance().timeInMillis
         //Cartas
@@ -161,6 +162,19 @@ class HomeFragment : Fragment() {
                 txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
                 txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
             }
+
+            lifecycleScope.launch {
+                val registro= Actividad(
+                    pasosObjetivo = sharedPreferencesApp.getInt("ActividadGoal"),
+                    pasosRegistrados = sharedPreferencesApp.getInt("ActividadProgress"),
+                    fecha = cal.time
+                )
+                miDb.actividadDao().insert(registro)
+                sharedPreferencesApp.saveInt("ActividadProgress",0)
+                txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
+                porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+
+            }
             sharedPreferencesApp.saveLastDay(today)
 
 
@@ -179,7 +193,7 @@ class HomeFragment : Fragment() {
 
         txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
         // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
-        val porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+        porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
         // <<< FIN AÑADIDO
 
 
