@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.ScrollView
@@ -60,7 +59,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     private var pasosIniciales = 0
     private var pasosPrev = 0
     private var distanciaPrev = 0.0
-    private var caloriasPrev = 0
+    private var caloriasPrev: Float = 0F
     private lateinit var txtPasos: TextView
     private lateinit var txtDistancia: TextView
     private lateinit var txtKcal: TextView
@@ -76,7 +75,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     private lateinit var recyclerView: RecyclerView
     private lateinit var barChart: BarChart
     private lateinit var adp: previousAdapter
-    private lateinit var rachaIcon: ImageView
+    private lateinit var rachaIcon: LottieAnimationView
     private var dX = 0f
     private var dY = 0f
     private var lastAction = 0
@@ -137,6 +136,9 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
         barChart = phy.findViewById(R.id.barChartWeek)
         configurarBarChart()
+
+        // Inicializar la base de datos antes de llamar a cargarGraficaSemanal
+        db = AppDatabase.getDatabase(requireContext())
         cargarGraficaSemanal()
 
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -155,12 +157,13 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         }
 
         verificarPermisosSensor()
-
-        verificarResetPorDia()
         cargarDatosHoy()
 
         txtRacha.text = obtenerRacha().toString()
-        rachaIcon.setImageResource(if (calcularProgresoTotal() >= 100) R.drawable.livetolive else R.drawable.flamaapagada)
+        rachaIcon = phy.findViewById(R.id.imgStreak)
+
+        val isRachaActiva = calcularProgresoTotal() >= 100
+        actualizarEstadoRacha(isRachaActiva)
 
         draggableCardView.setOnTouchListener { v, event ->
             val parent = v.parent as View
@@ -220,6 +223,19 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         }
     }
 
+    private fun actualizarEstadoRacha(rachaActiva: Boolean) {
+        if (rachaActiva) {
+            rachaIcon.setAnimation(R.raw.racha_activada)
+            rachaIcon.loop(true)
+            rachaIcon.playAnimation()
+        } else {
+            rachaIcon.setAnimation(R.raw.racha_apagada)
+            rachaIcon.loop(false)
+            rachaIcon.pauseAnimation()
+            rachaIcon.progress = 0f
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_ACTIVITY_RECOGNITION) {
@@ -265,23 +281,41 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     override fun onSensorChanged(event: SensorEvent?) {
         when (event?.sensor?.type) {
             Sensor.TYPE_STEP_COUNTER -> {
-                val pasosTotales = event.values[0].toInt()
+                val pasosTotalesSensor = event.values[0].toInt()
+
+                verificarResetPorDia(pasosTotalesSensor)
+
                 if (pasosIniciales == 0) {
-                    pasosIniciales = sharedPreferencesApp.getInt("pasosIniciales", pasosTotales)  // Restaurar si existe, sino usar pasosTotales
-                    sharedPreferencesApp.saveInt("pasosIniciales", pasosIniciales)  // Guardar para persistencia
+                    val guardado = sharedPreferencesApp.getInt("pasosOffset", -1)
+                    if (guardado != -1) {
+                        pasosIniciales = guardado
+                    } else {
+                        pasosIniciales = pasosTotalesSensor
+                        sharedPreferencesApp.saveInt("pasosOffset", pasosIniciales)
+                    }
                 }
-                pasosHoy = pasosTotales - pasosIniciales
-                Log.d("PhysicalFragment", "Pasos counter: $pasosHoy")
+
+                if (pasosTotalesSensor < pasosIniciales) {
+                    pasosIniciales = 0
+                    sharedPreferencesApp.saveInt("pasosOffset", 0)
+                }
+
+                pasosHoy = pasosTotalesSensor - pasosIniciales
+
+                if (pasosHoy < 0) pasosHoy = 0
+
+                Log.d("PhysicalFragment", "Pasos: $pasosHoy (Sensor: $pasosTotalesSensor - Offset: $pasosIniciales)")
+
                 actualizarUI()
                 verificarMetasIndividuales()
                 verificarMetaTotal()
             }
+
             Sensor.TYPE_STEP_DETECTOR -> {
                 val currentTime = System.currentTimeMillis()
                 if (currentTime - ultimoPasoTime > 500) {
                     pasosHoy++
                     ultimoPasoTime = currentTime
-                    Log.d("PhysicalFragment", "Paso detector: $pasosHoy")
                     actualizarUI()
                     verificarMetasIndividuales()
                     verificarMetaTotal()
@@ -300,7 +334,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
                     if (currentTime - ultimoPasoTime > 500) {
                         pasosHoy++
                         ultimoPasoTime = currentTime
-                        Log.d("PhysicalFragment", "Paso acelerómetro: $pasosHoy")
                         actualizarUI()
                         verificarMetasIndividuales()
                         verificarMetaTotal()
@@ -335,29 +368,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         }
     }
 
-    private fun rellenarHistorialSiVacio() {
-        val prefs = getPrefs()
-        val hoy = Date()
-        val random = Random()
-        for (i in 6 downTo 0) {
-            val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -i) }
-            val fecha = dateFormat.format(calendar.time)
-            if (!prefs.contains("progreso_$fecha")) {
-                val progreso = (20 + random.nextInt(90)).coerceAtMost(100)
-                val pasosAprox = (objetivoPasos * (progreso / 100.0)).toInt()
-                val distanciaAprox = (pasosAprox * 0.6) / 1000.0
-                val caloriasAprox = (pasosAprox * 0.04).toInt()
-
-                prefs.edit()
-                    .putInt("progreso_$fecha", progreso)
-                    .putInt("pasos_$fecha", pasosAprox)
-                    .putFloat("distancia_$fecha", distanciaAprox.toFloat())
-                    .putInt("calorias_$fecha", caloriasAprox)
-                    .apply()
-            }
-        }
-    }
-
     private fun cargarHistorial() {
         db = AppDatabase.getDatabase(requireContext())
         CoroutineScope(Dispatchers.IO).launch {
@@ -381,17 +391,11 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
         adp = previousAdapter(listaPrevious)
         recyclerView.adapter = adp
-
-//        adp.setOnItemClickListener { position: Int ->
-//            val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -(6 - position)) }
-//            val fechaSeleccionada = dateFormat.format(calendar.time)
-//            cargarDatosDeDia(fechaSeleccionada)
-//        }
     }
 
     fun formatFecha(date: Date): Pair<String, String> {
-        val mes = SimpleDateFormat("MMMM", Locale("es", "ES")).format(date) // "Noviembre"
-        val dia = SimpleDateFormat("d", Locale("es", "ES")).format(date)    // "25"
+        val mes = SimpleDateFormat("MMMM", Locale("es", "ES")).format(date)
+        val dia = SimpleDateFormat("d", Locale("es", "ES")).format(date)
         return Pair(mes, dia)
     }
 
@@ -426,38 +430,75 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         }
     }
 
+    // --- NUEVA FUNCIÓN CARGAR GRÁFICA SEMANAL CON DATOS REALES ---
     private fun cargarGraficaSemanal() {
-        val valores = mutableListOf<Float>()
-        val hoy = Date()
+        CoroutineScope(Dispatchers.IO).launch {
+            // Recolectamos el flujo (Flow) de la BD
+            db.actividadDao().getAll().collect { registros ->
 
-        for (i in 6 downTo 0) {
-            val calendar = Calendar.getInstance().apply { time = hoy; add(Calendar.DAY_OF_MONTH, -i) }
-            val fecha = dateFormat.format(calendar.time)
-            val pasos = getPrefs().getInt("pasos_$fecha", 0).toFloat()
-            valores.add(pasos)
+                val entries = ArrayList<BarEntry>()
+                val labels = ArrayList<String>()
+                val hoy = Date()
+
+                // Recorremos los últimos 7 días
+                for (i in 6 downTo 0) {
+                    val calendar = Calendar.getInstance()
+                    calendar.time = hoy
+                    calendar.add(Calendar.DAY_OF_YEAR, -i)
+                    val fechaString = dateFormat.format(calendar.time)
+
+                    var pasosDelDia = 0f
+
+                    if (i == 0) {
+                        // Si es HOY, tomamos el dato de la variable en vivo
+                        pasosDelDia = pasosHoy.toFloat()
+                    } else {
+                        // Si es AYER o antes, buscamos en la BD
+                        val registroEncontrado = registros.find {
+                            dateFormat.format(it.fecha) == fechaString
+                        }
+                        if (registroEncontrado != null) {
+                            pasosDelDia = registroEncontrado.pasosRegistrados.toFloat()
+                        }
+                    }
+
+                    // Eje X: 0, 1, 2...
+                    val xIndex = (6 - i).toFloat()
+                    entries.add(BarEntry(xIndex, pasosDelDia))
+
+                    // Etiquetas: L, M, M...
+                    val nombreDia = SimpleDateFormat("E", Locale("es", "ES"))
+                        .format(calendar.time).uppercase().substring(0, 1)
+                    labels.add(nombreDia)
+                }
+
+                // Actualizamos la vista en el hilo principal
+                CoroutineScope(Dispatchers.Main).launch {
+                    val dataSet = BarDataSet(entries, "Pasos").apply {
+                        color = Color.parseColor("#ad0000")
+                        valueTextColor = Color.BLACK
+                        valueTextSize = 10f
+                        setDrawValues(false)
+                    }
+
+                    val data = BarData(dataSet)
+                    data.barWidth = 0.5f
+
+                    barChart.data = data
+                    barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+                    barChart.notifyDataSetChanged()
+                    barChart.invalidate()
+                    barChart.animateY(1000)
+                }
+            }
         }
-
-        val entries = valores.mapIndexed { index, value -> BarEntry(index.toFloat(), value) }
-        val dataSet = BarDataSet(entries, "Pasos por día").apply {
-            color = Color.parseColor("#ad0000")
-            valueTextColor = Color.BLACK
-            valueTextSize = 12f
-            setDrawValues(false)
-        }
-        val data = BarData(dataSet)
-        data.barWidth = 0.35f
-        barChart.data = data
-
-        val dias = arrayOf("L", "M", "M", "J", "V", "S", "D")
-        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(dias)
-        barChart.animateY(900)
-        barChart.invalidate()
     }
+    // -------------------------------------------------------------
 
     private fun actualizarUI() {
         txtPasos.text = pasosHoy.toString()
         txtDistancia.text = String.format("%.2f", calcularDistancia())
-        txtKcal.text = calcularCalorias().toString()
+        txtKcal.text = String.format("%.2f", calcularCalorias())
         txtDistanciaObj.text = "/${String.format("%.1f", objetivoDistancia)} km"
         txtPasosObj.text = "/$objetivoPasos pasos"
         txtKcalObj.text = "/$objetivoCalorias kcal"
@@ -475,11 +516,16 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         barraProgreso.progress = calcularProgresoTotal().toInt()
 
         txtRacha.text = obtenerRacha().toString()
-        rachaIcon.setImageResource(if (calcularProgresoTotal() >= 100) R.drawable.livetolive else R.drawable.flamaapagada)
+        val isRachaActiva = calcularProgresoTotal() >= 100
+        actualizarEstadoRacha(isRachaActiva)
+
+        // OPCIONAL: Si quieres que la gráfica se actualice en tiempo real con cada paso
+        // puedes llamar a cargarGraficaSemanal() aquí, pero consume más recursos.
+        // Con hacerlo en onCreateView suele ser suficiente.
     }
 
     private fun calcularDistancia(): Double = (pasosHoy * 0.6) / 1000
-    private fun calcularCalorias(): Int = (pasosHoy * 0.04).toInt()
+    private fun calcularCalorias(): Double = pasosHoy * 0.04
 
     private fun calcularProgresoTotal(): Double {
         val p1 = pasosHoy / objetivoPasos.toFloat()
@@ -534,7 +580,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         sharedPreferencesApp.saveString("ultimaFechaStreak", fechaHoy())
         sharedPreferencesApp.saveBoolean("sumadoHoy", true)
         txtRacha.text = nueva.toString()
-        rachaIcon.setImageResource(R.drawable.livetolive)
+        actualizarEstadoRacha(true)
     }
 
     private fun yaSumoRachaHoy(): Boolean {
@@ -543,41 +589,60 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
     private fun obtenerRacha(): Int = sharedPreferencesApp.getInt("racha", 0)
 
-    private fun verificarResetPorDia() {
+    private fun verificarResetPorDia(rawPasosSensor: Int) {
         val prefs = getPrefs()
-        val ultima = prefs.getString("ultimaFecha", "")
+        val ultima = prefs.getString("ultimaFecha", "") ?: ""
         val hoy = fechaHoy()
 
         if (ultima != hoy) {
-            val progresoAyer = prefs.getInt("progreso_$ultima", 0)
-            val rachaPerdida = obtenerRacha()
 
-            if (progresoAyer < 100 && rachaPerdida > 0) {
-                mostrarPopupRachaPerdida(rachaPerdida)
-                sharedPreferencesApp.saveInt("racha", 0)
+            if (ultima.isNotEmpty()) {
+                val progresoAyer = prefs.getInt("progreso_$ultima", 0)
+                val rachaPerdida = obtenerRacha()
+                if (progresoAyer < 100 && rachaPerdida > 0) {
+                    mostrarPopupRachaPerdida(rachaPerdida)
+                    sharedPreferencesApp.saveInt("racha", 0)
+                }
             }
 
-            sharedPreferencesApp.saveBoolean("sumadoHoy", false)
+            pasosIniciales = rawPasosSensor
+            sharedPreferencesApp.saveInt("pasosOffset", pasosIniciales)
 
             pasosHoy = 0
-            pasosIniciales = 0
+            sharedPreferencesApp.saveBoolean("sumadoHoy", false)
+            sharedPreferencesApp.saveInt("ActividadProgress", 0)
+
             prefs.edit()
                 .putInt("pasosHoy", 0)
                 .putString("ultimaFecha", hoy)
                 .apply()
+
+            cargarHistorial()
+            actualizarUI()
+            // Recargamos la gráfica porque cambió el día
+            cargarGraficaSemanal()
         }
     }
 
     private fun mostrarPopupRachaPerdida(racha: Int) {
-        mostrarDialgo()
+        mostrarDialgo(racha)
     }
 
     private fun cargarDatosHoy() {
         val prefs = getPrefs()
         pasosHoy = sharedPreferencesApp.getInt("ActividadProgress", 0)
+        pasosIniciales = sharedPreferencesApp.getInt("pasosOffset", 0)
+
         pasosPrev = pasosHoy
         distanciaPrev = prefs.getFloat("distancia_${fechaHoy()}", calcularDistancia().toFloat()).toDouble()
-        caloriasPrev = prefs.getInt("calorias_${fechaHoy()}", calcularCalorias())
+
+        try {
+            caloriasPrev = prefs.getFloat("calorias_${fechaHoy()}", calcularCalorias().toFloat())
+        } catch (e: ClassCastException) {
+            val caloriasViejas = prefs.getInt("calorias_${fechaHoy()}", calcularCalorias().toInt())
+            caloriasPrev = caloriasViejas.toFloat()
+            prefs.edit().putFloat("calorias_${fechaHoy()}", caloriasPrev).apply()
+        }
         actualizarUI()
     }
 
@@ -588,7 +653,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
             .putInt("pasosHoy", pasosHoy)
             .putInt("pasos_$fecha", pasosHoy)
             .putFloat("distancia_$fecha", calcularDistancia().toFloat())
-            .putInt("calorias_$fecha", calcularCalorias())
+            .putFloat("calorias_$fecha", calcularCalorias().toFloat())
             .putInt("progreso_$fecha", calcularProgresoTotal().toInt())
             .putString("ultimaFecha", fecha)
             .apply()
@@ -608,8 +673,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         actualizarUI()
     }
 
-
-    fun mostrarDialgo(){
+    fun mostrarDialgo(rachaPerdida: Int){
         val dialogView=layoutInflater.inflate(R.layout.alertpopup,null)
         val btnDialog=dialogView.findViewById<Button>(R.id.btnEntendido)
         val infoPopup=dialogView.findViewById<TextView>(R.id.txtAviso)
@@ -619,7 +683,8 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         iconPopup.speed=0.5f
         iconPopup.loop(true)
         titlePopup.text="¡RACHA PERDIDA!"
-        infoPopup.text="No haz cumplido tus objetivos hace mas de un dia"
+        val mensaje = "¡Oh no! Has perdido tu racha de ${rachaPerdida} días por no cumplir tus objetivos ayer. ¡No te rindas, vuelve a empezar hoy!"
+        infoPopup.text = mensaje
         val dialog= androidx.appcompat.app.AlertDialog.Builder(requireContext()).setView(dialogView).create()
         dialog.show()
         btnDialog.setOnClickListener {

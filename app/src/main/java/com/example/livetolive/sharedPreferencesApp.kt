@@ -49,7 +49,7 @@ object sharedPreferencesApp {
                 putString("ultimaFecha", "")
                 putInt("objetivoPasos", 3000)
                 putFloat("objetivoDistancia", 3.0f)
-                putInt("objetivoCalorias", 200)
+                putFloat("objetivoCalorias", 200.0f)
 
                 //shared Preferences para los objetivos y progresos de sueño
                 putInt("SleepGoal",0)
