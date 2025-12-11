@@ -32,6 +32,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.example.livetolive.sharedPreferencesApp
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -311,6 +312,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         objetivoPasos = prefs.getInt("objetivoPasos", 3000)
         objetivoDistancia = prefs.getFloat("objetivoDistancia", 3.0f).toDouble()
         objetivoCalorias = prefs.getInt("objetivoCalorias", 200)
+        objetivoPasos = sharedPreferencesApp.getInt("ActividadGoal", 0)
     }
 
     private fun guardarObjetivos() {
@@ -376,7 +378,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     }
 
     private fun cargarDatosDeDia(fecha: String) {
-        val prefs = getPrefs()
         pasosHoy = sharedPreferencesApp.getInt("ActividadProgress", 0)
         actualizarUI()
     }
@@ -443,6 +444,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         txtPasosObj.text = "/$objetivoPasos pasos"
         txtKcalObj.text = "/$objetivoCalorias kcal"
         sharedPreferencesApp.saveInt("ActividadProgress", pasosHoy)
+        sharedPreferencesApp.saveInt("ActividadGoal", objetivoPasos)
 
         circular.progressMax = objetivoPasos.toFloat()
         circular.setProgressWithAnimation(pasosHoy.toFloat(), circular.progressMax.toLong(), AccelerateDecelerateInterpolator())

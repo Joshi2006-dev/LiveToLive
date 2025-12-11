@@ -1,5 +1,8 @@
 package com.example.livetolive
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import kotlin.math.round
 
 interface ProfileUpdateCallback {
@@ -26,6 +30,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class ProfileFragment : Fragment(), ProfileUpdateCallback {
     // TODO: Rename and change types of parameters
+    private lateinit var FotoPerfil: ImageView
+    private var imageUri: Uri? = null
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var peso: TextView
@@ -51,7 +57,9 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
         val profile= inflater.inflate(R.layout.fragment_profile, container, false)
         val scrollview=profile.findViewById<ScrollView>(R.id.scroller)
         val btnVolver=profile.findViewById<ImageView>(R.id.btnVolver)
+        val btnEditPhoto=profile.findViewById<ImageView>(R.id.btnEditPhoto)
 
+        FotoPerfil=profile.findViewById(R.id.imgProfile)
         peso = profile.findViewById(R.id.txtPeso)
         altura = profile.findViewById(R.id.txtAltura)
         edad = profile.findViewById(R.id.txtEdad)
@@ -83,7 +91,30 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        btnEditPhoto.setOnClickListener {
+            ImageController.selectPhotoFromGallery(this, 1)
+        }
+
         return profile
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            val uriSeleccionada = data.data
+            if (uriSeleccionada != null) {
+                ImageController.saveImage(requireContext(), uriSeleccionada)
+                updatePhotoView(uriSeleccionada)
+            }
+        }
+    }
+
+    private fun updatePhotoView(uri: Uri) {
+        Glide.with(this)
+            .load(uri)
+            .circleCrop()
+            .into(FotoPerfil)
     }
 
     private fun loadProfileData() {
@@ -91,16 +122,14 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
         val alturaCm = sharedPreferencesApp.getFloat("Altura", 0f)
         val alturaM = alturaCm / 100
 
-        // Uso de String.format() con los valores correctos
         peso.text = String.format("%.1f Kg", pesocalc)
         altura.text = String.format("%.2f m", alturaM)
         edad.text = sharedPreferencesApp.getInt("Edad").toString() + " años"
         sexo.text = sharedPreferencesApp.getString("Sexo")
         nombre.text = sharedPreferencesApp.getString("Nombre")
 
-        // Cálculo y clasificación del IMC
         var IMCRedondeado = 0f
-        // Prevención de división por cero
+
         if (alturaM > 0) {
             val IMCcalc: Float = pesocalc / (alturaM * alturaM)
             IMCRedondeado = round(IMCcalc * 10) / 10
@@ -116,6 +145,13 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
             in 35.0f..39.9f -> indicador.text = "OBESIDAD TIPO II"
             in 40.0f..Float.MAX_VALUE -> indicador.text = "OBESIDAD TIPO III y IV"
             else -> indicador.text = "DATO INVÁLIDO"
+        }
+
+        val savedUri = ImageController.getImageUri(requireContext())
+        if (savedUri != null) {
+            updatePhotoView(savedUri)
+        } else {
+            FotoPerfil.setImageResource(R.drawable.ic_launcher_background)
         }
     }
 

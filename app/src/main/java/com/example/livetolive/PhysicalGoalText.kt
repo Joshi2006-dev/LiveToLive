@@ -24,7 +24,7 @@ class PhysicalGoalText(private val callback: ObjetivoCallback) : BottomSheetDial
         val etxObjetivoPasos = view.findViewById<EditText>(R.id.etxObjetivoPasos)
         val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmarObjetivo)
 
-        val objetivoActual = sharedPreferencesApp.getInt("objetivoPasos", 3000)
+        val objetivoActual = sharedPreferencesApp.getInt("objetivoPasos", 0)
         etxObjetivoPasos.setText(objetivoActual.toString())
 
         btnConfirmar.setOnClickListener {
