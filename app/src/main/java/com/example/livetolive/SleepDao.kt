@@ -19,6 +19,8 @@ interface SleepDao {
     @Query("SELECT * FROM Sleep WHERE fecha = :fecha")
     fun getByDate(fecha: Date): Flow<Sleep?>
 
+    @Query("SELECT SUM(horasRegistradas) FROM Sleep")
+    fun getTotalHoras(): Flow<Float?>
     @Query("SELECT * FROM Sleep ORDER BY fecha ASC")
     fun getAll(): Flow<List<Sleep>>
 }
