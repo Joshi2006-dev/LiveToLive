@@ -62,6 +62,7 @@ class HomeFragment : Fragment() {
         val home =inflater.inflate(R.layout.fragment_home, container, false)
         miDb = AppDatabase.getDatabase(requireContext())
         var porcentajeActividad:Int=0
+        var porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
         val lastDay = sharedPreferencesApp.getLastDay()
         val today = Calendar.getInstance().timeInMillis
         //Cartas
@@ -161,6 +162,8 @@ class HomeFragment : Fragment() {
                 sharedPreferencesApp.saveInt("SleepProgress",0)
                 txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
                 txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
+                porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
+
             }
 
             lifecycleScope.launch {
@@ -173,9 +176,11 @@ class HomeFragment : Fragment() {
                 sharedPreferencesApp.saveInt("ActividadProgress",0)
                 txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
                 porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
-
             }
             sharedPreferencesApp.saveLastDay(today)
+            sharedPreferencesApp.saveBoolean("litrosTomados",false)
+            sharedPreferencesApp.saveBoolean("pasosCumplidos",false)
+            sharedPreferencesApp.saveBoolean("horasCumplidas",false)
 
 
         }else{
@@ -187,7 +192,6 @@ class HomeFragment : Fragment() {
 
         txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
         // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
-        val porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
         // <<< FIN AÑADIDO
         txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
 

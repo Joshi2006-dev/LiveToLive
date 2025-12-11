@@ -569,15 +569,7 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
     }
 
     private fun mostrarPopupRachaPerdida(racha: Int) {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_racha_perdida, null)
-        val medallaImage = dialogView.findViewById<ImageView>(R.id.imgMedalla)
-        medallaImage.setImageResource(R.drawable.profile_example)
-        AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .setTitle("Racha Perdida")
-            .setMessage("Tu racha de $racha días terminó porque no cumpliste el 100% ayer.")
-            .setPositiveButton("Entendido", null)
-            .show()
+        mostrarDialgo()
     }
 
     private fun cargarDatosHoy() {
@@ -614,5 +606,24 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
         guardarObjetivos()
         actualizarUI()
+    }
+
+
+    fun mostrarDialgo(){
+        val dialogView=layoutInflater.inflate(R.layout.alertpopup,null)
+        val btnDialog=dialogView.findViewById<Button>(R.id.btnEntendido)
+        val infoPopup=dialogView.findViewById<TextView>(R.id.txtAviso)
+        val titlePopup=dialogView.findViewById<TextView>(R.id.txtHeaderText)
+        val iconPopup=dialogView.findViewById<LottieAnimationView>(R.id.AlertIcon)
+        iconPopup.setAnimation(R.raw.racha_perdida)
+        iconPopup.speed=0.5f
+        iconPopup.loop(true)
+        titlePopup.text="¡RACHA PERDIDA!"
+        infoPopup.text="No haz cumplido tus objetivos hace mas de un dia"
+        val dialog= androidx.appcompat.app.AlertDialog.Builder(requireContext()).setView(dialogView).create()
+        dialog.show()
+        btnDialog.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 }
