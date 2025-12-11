@@ -244,6 +244,12 @@ class SleepFragment : Fragment() {
         if (progreso >= objetivo) {
             btnMas.isEnabled = false
             btnMenos.isEnabled = false
+            if(sharedPreferencesApp.getBoolean("horasCumplidas",false)==false){
+                var logros:Int = sharedPreferencesApp.getInt("logrosObtenido")
+                logros=logros+1
+                sharedPreferencesApp.saveInt("logrosObtenido",logros)
+                sharedPreferencesApp.saveBoolean("horasCumplidas",true)
+            }
         } else {
             btnMas.isEnabled = true
             btnMenos.isEnabled = true

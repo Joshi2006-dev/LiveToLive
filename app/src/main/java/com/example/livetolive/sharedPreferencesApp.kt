@@ -26,6 +26,13 @@ object sharedPreferencesApp {
                 putBoolean("PlatinumPop",false)
                 putBoolean("DiamondPop",false)
                 putBoolean("KingPop",false)
+                //Para los objetivos cumplidos de cada seccion
+                putBoolean("pasosCumplidos",false)
+                putBoolean("litrosTomados",false)
+                putBoolean("horasCumplidas",false)
+
+                //contador de logros
+                putInt("logrosObtenido",0)
 
                 //Este de aqui hace que solo se ejecute una vez
                 putBoolean("Init",true)

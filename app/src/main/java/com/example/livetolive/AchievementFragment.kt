@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
@@ -30,13 +31,14 @@ class AchievementFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    val l1=true
+    var l1=false
+    var l2=false
+    var l3=false
+    var l4=false
+    var l5=false
+    var l6=false
 
-    val l2=true
-    val l4=true
-    val l3=true
-    val l5=true
-    val l6=true
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +57,30 @@ class AchievementFragment : Fragment() {
         val achivement= inflater.inflate(R.layout.fragment_achievement, container, false)
         val scroller=achivement.findViewById<ScrollView>(R.id.scroller)
         val nAchivs=achivement.findViewById<TextView>(R.id.txtCounterAchicements)
+
+        if (sharedPreferencesApp.getInt("logrosObtenido",0)>=1){
+            l1=true
+        }
+        if(sharedPreferencesApp.getInt("logrosObtenido",0)>=10){
+            l2=true
+        }
+
+        if(sharedPreferencesApp.getInt("logrosObtenido",0)>=50){
+            l3=true
+        }
+
+        if (sharedPreferencesApp.getInt("logrosObtenido",0)>=100){
+            l4=true
+        }
+
+        if (sharedPreferencesApp.getInt("logrosObtenido",0)>=500) {
+            l5 = true
+        }
+
+        if (sharedPreferencesApp.getInt("logrosObtenido",0)>=1000){
+            l6=true
+        }
+
 
         //Declaracion del popup
         val dialogView=layoutInflater.inflate(R.layout.achivementpopup,null)
@@ -135,7 +161,7 @@ class AchievementFragment : Fragment() {
             CardSilver.setBackgroundResource(R.drawable.silverback)
             tittleSilver.text="PLATA"
             tittleSilver.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-            descSilver.text="Completa 50 objetivos"
+            descSilver.text="Completa 10 objetivos"
             silverIcon.setAnimation(R.raw.silver)
             silverIcon.scaleY=2f
             silverIcon.scaleX=2f
@@ -203,7 +229,7 @@ class AchievementFragment : Fragment() {
             CardDiamond.setBackgroundResource(R.drawable.hidratationgradient)
             tittleDiam.text="DIAMANTE"
             tittleDiam.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-            descDiamond.text="Completa 500 objetivos"
+            descDiamond.text="Completa 200 objetivos"
             diamondIcon.setAnimation(R.raw.diamond)
             diamondIcon.updatePadding(0,0,0,30)
             diamondIcon.scaleX=1.6f

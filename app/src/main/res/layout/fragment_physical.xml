@@ -161,6 +161,7 @@
                                     android:layout_centerInParent="true"
                                     android:fontFamily="@font/poppins_bold"
                                     android:text="80%"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
                                     android:textStyle="bold" />
 
@@ -223,12 +224,14 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:fontFamily="@font/poppins_bold"
-                                                android:text="180" />
+                                                android:text="180"
+                                                android:textColor="@color/black"/>
                                             <TextView
                                                 android:id="@+id/txtDistanciaObj"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="/3 km"/>
+                                                android:text="/3 km"
+                                                android:textColor="@color/black"/>
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -271,12 +274,14 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:fontFamily="@font/poppins_bold"
-                                                android:text="569" />
+                                                android:text="569"
+                                                android:textColor="@color/black"/>
                                             <TextView
                                                 android:id="@+id/txtPasosObj"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="/4500 pasos"/>
+                                                android:text="/4500 pasos"
+                                                android:textColor="@color/black"/>
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -318,12 +323,14 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:fontFamily="@font/poppins_bold"
-                                                android:text="150" />
+                                                android:text="150"
+                                                android:textColor="@color/black"/>
                                             <TextView
                                                 android:id="@+id/txtKcalObj"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="/300 kcal"/>
+                                                android:text="/300 kcal"
+                                                android:textColor="@color/black"/>
                                         </LinearLayout>
 
                                     </LinearLayout>

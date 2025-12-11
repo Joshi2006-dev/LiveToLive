@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -221,6 +222,7 @@ class HidrateFragment : Fragment() {
         return binding.root
     }
 
+
     fun formatFecha(date: Date): Pair<String, String> {
         val mes = SimpleDateFormat("MMMM", Locale("es", "ES")).format(date) // "Noviembre"
         val dia = SimpleDateFormat("d", Locale("es", "ES")).format(date)    // "25"
@@ -266,6 +268,12 @@ class HidrateFragment : Fragment() {
             TextInactivo(binding.btnDisminuir)
             binding.btnIncrementar.isEnabled = false
             TextInactivo(binding.btnIncrementar)
+            if(sharedPreferencesApp.getBoolean("litrosTomados",false)==false){
+                var logros:Int = sharedPreferencesApp.getInt("logrosObtenido")
+                logros=logros+1
+                sharedPreferencesApp.saveInt("logrosObtenido",logros)
+                sharedPreferencesApp.saveBoolean("litrosTomados",true)
+            }
         }else{
             binding.btnDisminuir.isEnabled = true
             TextActivo(binding.btnDisminuir)
