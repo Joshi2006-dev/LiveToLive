@@ -160,11 +160,15 @@ class HomeFragment : Fragment() {
 
 
         txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
-        val porcentajeSueño= (sharedPreferencesApp.getInt("SleepProgress")/sharedPreferencesApp.getInt("SleepGoal"))*100
+        // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
+        val porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
+        // <<< FIN AÑADIDO
         txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
 
         txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
-        val porcentajeActividad= (sharedPreferencesApp.getInt("ActividadProgress")/sharedPreferencesApp.getInt("ActividadGoal"))*100
+        // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
+        val porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+        // <<< FIN AÑADIDO
 
 
         val anBar= barAnimation()
@@ -185,8 +189,8 @@ class HomeFragment : Fragment() {
         }
         carta1.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction().
-                    replace(R.id.Frame, HidrateFragment()).
-                    addToBackStack(null).commit()
+            replace(R.id.Frame, HidrateFragment()).
+            addToBackStack(null).commit()
         }
 
         carta2.setOnClickListener {
@@ -200,6 +204,17 @@ class HomeFragment : Fragment() {
             replace(R.id.Frame, PhysicalFragment()).
             addToBackStack(null).commit()
         }
+
+        // <<< AÑADIDO: escuchar notificación de SleepFragment para actualizar barra de sueño en Home
+        parentFragmentManager.setFragmentResultListener("home_sleep_refresh", viewLifecycleOwner) { _, _ ->
+            txtobj2.text = sharedPreferencesApp.getInt("SleepGoal").toString() + " H"
+            txtprogre2.text = sharedPreferencesApp.getInt("SleepProgress").toString() + " H"
+
+            val porcentaje = ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat()) * 100).toInt()
+            anBar.animateProgress(progre2, 0, porcentaje)
+        }
+        // <<< FIN AÑADIDO
+
         return home
     }
 
@@ -234,14 +249,8 @@ class HomeFragment : Fragment() {
 
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
+         * Use this factory method to create a new instance of fragment HomeFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
