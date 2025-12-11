@@ -19,6 +19,6 @@ interface ActividadDao {
     @Query("SELECT * FROM Actividad WHERE fecha = :fecha")
     fun getByDate(fecha: Date): Flow<Actividad?>
 
-    @Query("SELECT * FROM Actividad ORDER BY fecha DESC")
+    @Query("SELECT * FROM Actividad ORDER BY fecha ASC")
     fun getAll(): Flow<List<Actividad>>
 }

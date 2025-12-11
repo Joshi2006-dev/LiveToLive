@@ -14,6 +14,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.math.roundToInt
 
 private const val ARG_PARAM1 = "param1"
@@ -23,16 +29,12 @@ class SleepFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var db: AppDatabase
+    val colorConstante = R.color.sleep
     private lateinit var recyclerView: RecyclerView
+    val listaPrevious = mutableListOf<previousDataClass>()
     private lateinit var adp: previousAdapter
 
-    private val datesList = listOf(
-        previousDataClass("Noviembre", "27", 50, R.color.sleep),
-        previousDataClass("Noviembre", "28", 90, R.color.sleep),
-        previousDataClass("Noviembre", "29", 70, R.color.sleep),
-        previousDataClass("Noviembre", "30", 100, R.color.sleep),
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +80,33 @@ class SleepFragment : Fragment() {
 
         // historial
         recyclerView = sleep.findViewById(R.id.historial)
+
+        db = AppDatabase.getDatabase(requireContext())
+        CoroutineScope(Dispatchers.IO).launch {
+            db.sleepDao().getAll().collect { registros ->
+                val listaTemp = mutableListOf<previousDataClass>()
+
+                registros.forEach { h ->
+                    val (mes, dia) = formatFecha(h.fecha)
+                    val progreso = ((h.horasRegistradas / h.horasObjetivo) * 100).toInt()
+                    listaTemp.add(previousDataClass(mes, dia, progreso, colorConstante))
+                }
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    listaPrevious.clear()
+                    listaPrevious.addAll(listaTemp)
+                    adp.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(adp.itemCount - 1)
+                }
+            }
+        }
+
+
+
+
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        adp = previousAdapter(datesList)
+        adp = previousAdapter(listaPrevious)
         recyclerView.adapter = adp
         recyclerView.scrollToPosition(adp.itemCount - 1)
 
@@ -149,6 +175,12 @@ class SleepFragment : Fragment() {
         validarBotones(txtProgreso, txtObjetivo, btnMas, btnMenos)
 
         return sleep
+    }
+
+    fun formatFecha(date: Date): Pair<String, String> {
+        val mes = SimpleDateFormat("MMMM", Locale("es", "ES")).format(date) // "Noviembre"
+        val dia = SimpleDateFormat("d", Locale("es", "ES")).format(date)    // "25"
+        return Pair(mes, dia)
     }
 
     private fun actualizarProgreso(

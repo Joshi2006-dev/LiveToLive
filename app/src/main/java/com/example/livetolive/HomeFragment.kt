@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val home =inflater.inflate(R.layout.fragment_home, container, false)
         miDb = AppDatabase.getDatabase(requireContext())
+        var porcentajeActividad:Int=0
         val lastDay = sharedPreferencesApp.getLastDay()
         val today = Calendar.getInstance().timeInMillis
         //Cartas
@@ -131,14 +132,13 @@ class HomeFragment : Fragment() {
         //Carga los datos que estan en el sharedPreferences Dentro de las cardvius
 
         if (isNewDay(lastDay)) {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = lastDay
+            cal.set(Calendar.HOUR_OF_DAY, 12)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
             lifecycleScope.launch {
-                val cal = Calendar.getInstance()
-                cal.timeInMillis = lastDay
-                cal.set(Calendar.HOUR_OF_DAY, 12)
-                cal.set(Calendar.MINUTE, 0)
-                cal.set(Calendar.SECOND, 0)
-                cal.set(Calendar.MILLISECOND, 0)
-
                 val registro = Hidratacion(
                     litrosObjetivo = sharedPreferencesApp.getFloat("HidrateGoal"),
                     litrosRegistrados = sharedPreferencesApp.getFloat("HidratationProgress"),
@@ -146,12 +146,38 @@ class HomeFragment : Fragment() {
                 )
                 miDb.hidratacionDao().insert(registro)
                 sharedPreferencesApp.saveFloat("HidratationProgress",0f)
-                sharedPreferencesApp.saveLastDay(today)
-
                 txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
                 porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
                 txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
             }
+
+            lifecycleScope.launch {
+                val registro= Sleep(
+                    horasObjetivo = sharedPreferencesApp.getInt("SleepGoal").toFloat(),
+                    horasRegistradas = sharedPreferencesApp.getInt("SleepProgress").toFloat(),
+                    fecha = cal.time
+                )
+                miDb.sleepDao().insert(registro)
+                sharedPreferencesApp.saveInt("SleepProgress",0)
+                txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
+                txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
+            }
+
+            lifecycleScope.launch {
+                val registro= Actividad(
+                    pasosObjetivo = sharedPreferencesApp.getInt("ActividadGoal"),
+                    pasosRegistrados = sharedPreferencesApp.getInt("ActividadProgress"),
+                    fecha = cal.time
+                )
+                miDb.actividadDao().insert(registro)
+                sharedPreferencesApp.saveInt("ActividadProgress",0)
+                txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
+                porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+
+            }
+            sharedPreferencesApp.saveLastDay(today)
+
+
         }else{
             txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
             porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
@@ -167,7 +193,7 @@ class HomeFragment : Fragment() {
 
         txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
         // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
-        val porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+        porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
         // <<< FIN AÑADIDO
 
 
