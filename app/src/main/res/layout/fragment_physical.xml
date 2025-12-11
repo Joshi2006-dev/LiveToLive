@@ -323,7 +323,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:fontFamily="@font/poppins_bold"
-                                                android:text="150"
+                                                android:text="150.0"
                                                 android:textColor="@color/black"/>
                                             <TextView
                                                 android:id="@+id/txtKcalObj"
@@ -404,7 +404,6 @@
                         android:layout_gravity="end"/>
                 </FrameLayout>
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
     <androidx.cardview.widget.CardView
@@ -421,22 +420,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp"
+            android:padding="5dp"
             android:gravity="center">
+
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/imgStreak"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/flamaapagada"
-                android:layout_marginEnd="5dp" />
+                android:layout_width="63dp"
+                android:layout_height="51dp"
+                android:layout_marginEnd="8dp"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/racha_apagada" />
+
             <TextView
                 android:id="@+id/txtStreakCount"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_bold"
                 android:text="0"
-                android:textSize="20sp"
                 android:textColor="#ad0000"
-                android:fontFamily="@font/poppins_bold" />
+                android:textSize="28sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
