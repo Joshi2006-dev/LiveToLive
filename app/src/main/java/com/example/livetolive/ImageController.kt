@@ -15,7 +15,7 @@ object ImageController {
     }
 
     fun saveImage(context: Context, uri: Uri) {
-        val file = File(context.filesDir, "profile_example.jpg")
+        val file = File(context.filesDir, "profile_photo.jpg")
 
         try {
             val inputStream = context.contentResolver.openInputStream(uri)
