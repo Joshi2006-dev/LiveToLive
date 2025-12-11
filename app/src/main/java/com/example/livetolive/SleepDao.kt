@@ -19,6 +19,6 @@ interface SleepDao {
     @Query("SELECT * FROM Sleep WHERE fecha = :fecha")
     fun getByDate(fecha: Date): Flow<Sleep?>
 
-    @Query("SELECT * FROM Sleep ORDER BY fecha DESC")
+    @Query("SELECT * FROM Sleep ORDER BY fecha ASC")
     fun getAll(): Flow<List<Sleep>>
 }

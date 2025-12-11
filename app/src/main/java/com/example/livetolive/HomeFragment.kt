@@ -131,14 +131,13 @@ class HomeFragment : Fragment() {
         //Carga los datos que estan en el sharedPreferences Dentro de las cardvius
 
         if (isNewDay(lastDay)) {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = lastDay
+            cal.set(Calendar.HOUR_OF_DAY, 12)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
             lifecycleScope.launch {
-                val cal = Calendar.getInstance()
-                cal.timeInMillis = lastDay
-                cal.set(Calendar.HOUR_OF_DAY, 12)
-                cal.set(Calendar.MINUTE, 0)
-                cal.set(Calendar.SECOND, 0)
-                cal.set(Calendar.MILLISECOND, 0)
-
                 val registro = Hidratacion(
                     litrosObjetivo = sharedPreferencesApp.getFloat("HidrateGoal"),
                     litrosRegistrados = sharedPreferencesApp.getFloat("HidratationProgress"),
@@ -146,12 +145,25 @@ class HomeFragment : Fragment() {
                 )
                 miDb.hidratacionDao().insert(registro)
                 sharedPreferencesApp.saveFloat("HidratationProgress",0f)
-                sharedPreferencesApp.saveLastDay(today)
-
                 txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
                 porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
                 txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
             }
+
+            lifecycleScope.launch {
+                val registro= Sleep(
+                    horasObjetivo = sharedPreferencesApp.getInt("SleepGoal").toFloat(),
+                    horasRegistradas = sharedPreferencesApp.getInt("SleepProgress").toFloat(),
+                    fecha = cal.time
+                )
+                miDb.sleepDao().insert(registro)
+                sharedPreferencesApp.saveInt("SleepProgress",0)
+                txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
+                txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
+            }
+            sharedPreferencesApp.saveLastDay(today)
+
+
         }else{
             txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
             porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
