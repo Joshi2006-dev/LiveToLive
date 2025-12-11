@@ -11,9 +11,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import kotlin.math.round
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import kotlinx.coroutines.launch
 
 interface ProfileUpdateCallback {
     fun onProfileDataUpdated()
@@ -42,6 +44,7 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
     private lateinit var nombre: TextView
     private lateinit var imc: TextView
     private lateinit var indicador: TextView
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +62,34 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
         val scrollview=profile.findViewById<ScrollView>(R.id.scroller)
         val btnVolver=profile.findViewById<ImageView>(R.id.btnVolver)
         val btnEditPhoto=profile.findViewById<ImageView>(R.id.btnEditPhoto)
+        val pasosTotales=profile.findViewById<TextView>(R.id.txtPasosTotales)
+        val horasTotales=profile.findViewById<TextView>(R.id.txtHorasTotales)
+        val litrosTotales=profile.findViewById<TextView>(R.id.txtLitrosTotales)
+
+        db = AppDatabase.getDatabase(requireContext())
+        lifecycleScope.launch {
+            db.hidratacionDao().getTotalLitros().collect { litros ->
+                var litrosPrevios:Float=litros?:0f
+                var litroTotalesTomados=litrosPrevios+ sharedPreferencesApp.getFloat("HidratationProgress",0f)
+                litrosTotales.text = litroTotalesTomados.toString()
+            }
+        }
+
+        lifecycleScope.launch {
+            db.sleepDao().getTotalHoras().collect { horas ->
+                var horasPrevios:Float=horas?:0f
+                var horasTotalesDormidas=horasPrevios+ sharedPreferencesApp.getInt("SleepProgress").toFloat()
+                horasTotales.text = horasTotalesDormidas.toInt().toString()
+            }
+        }
+
+        lifecycleScope.launch {
+            db.actividadDao().getTotalPasos().collect { pasos ->
+                var pasosPrevios:Int=pasos?:0
+                var pasosTotalesRealizados=pasosPrevios+ sharedPreferencesApp.getInt("ActividadProgress")
+                pasosTotales.text = pasosTotalesRealizados.toString()
+            }
+        }
 
         FotoPerfil=profile.findViewById(R.id.imgProfile)
         peso = profile.findViewById(R.id.txtPeso)

@@ -19,6 +19,11 @@ interface HidratacionDao {
     @Query("SELECT * FROM Hidratacion WHERE fecha = :fecha")
     fun getByDate(fecha: Date): Flow<Hidratacion?>
 
+    @Query("SELECT SUM(litrosRegistrados) FROM Hidratacion")
+    fun getTotalLitros(): Flow<Float?>
+
+
+
     @Query("SELECT * FROM Hidratacion ORDER BY fecha ASC")
     fun getAll(): Flow<List<Hidratacion>>
 }

@@ -19,6 +19,10 @@ interface ActividadDao {
     @Query("SELECT * FROM Actividad WHERE fecha = :fecha")
     fun getByDate(fecha: Date): Flow<Actividad?>
 
+    @Query("SELECT SUM(pasosRegistrados) FROM Actividad")
+    fun getTotalPasos(): Flow<Int?>
+
+
     @Query("SELECT * FROM Actividad ORDER BY fecha ASC")
     fun getAll(): Flow<List<Actividad>>
 }
