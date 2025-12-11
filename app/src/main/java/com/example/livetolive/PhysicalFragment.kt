@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.livetolive.sharedPreferencesApp
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -412,13 +413,17 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
             setPinchZoom(false)
             setScaleEnabled(false)
             setDrawValueAboveBar(true)
+
             axisRight.isEnabled = false
+
             axisLeft.apply {
                 axisMinimum = 0f
                 textColor = Color.BLACK
-                textSize = 12f
-                gridColor = Color.parseColor("#DDDDDD")
+                textSize = 10f
+                gridColor = Color.parseColor("#ad0000")
+                setDrawGridLines(false)
             }
+
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false)
@@ -429,31 +434,24 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
             legend.isEnabled = false
         }
     }
-
-    // --- NUEVA FUNCIÓN CARGAR GRÁFICA SEMANAL CON DATOS REALES ---
     private fun cargarGraficaSemanal() {
         CoroutineScope(Dispatchers.IO).launch {
-            // Recolectamos el flujo (Flow) de la BD
             db.actividadDao().getAll().collect { registros ->
 
                 val entries = ArrayList<BarEntry>()
                 val labels = ArrayList<String>()
-                val hoy = Date()
 
-                // Recorremos los últimos 7 días
                 for (i in 6 downTo 0) {
                     val calendar = Calendar.getInstance()
-                    calendar.time = hoy
                     calendar.add(Calendar.DAY_OF_YEAR, -i)
+
                     val fechaString = dateFormat.format(calendar.time)
 
                     var pasosDelDia = 0f
 
                     if (i == 0) {
-                        // Si es HOY, tomamos el dato de la variable en vivo
                         pasosDelDia = pasosHoy.toFloat()
                     } else {
-                        // Si es AYER o antes, buscamos en la BD
                         val registroEncontrado = registros.find {
                             dateFormat.format(it.fecha) == fechaString
                         }
@@ -462,20 +460,43 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
                         }
                     }
 
-                    // Eje X: 0, 1, 2...
                     val xIndex = (6 - i).toFloat()
                     entries.add(BarEntry(xIndex, pasosDelDia))
 
-                    // Etiquetas: L, M, M...
                     val nombreDia = SimpleDateFormat("E", Locale("es", "ES"))
                         .format(calendar.time).uppercase().substring(0, 1)
                     labels.add(nombreDia)
                 }
 
-                // Actualizamos la vista en el hilo principal
+                val maxPasosEnLaSemana = entries.maxOfOrNull { it.y } ?: 0f
+
                 CoroutineScope(Dispatchers.Main).launch {
+                    val meta = objetivoPasos.toFloat()
+
+                    val limiteSuperior = if (maxPasosEnLaSemana > meta) {
+                        maxPasosEnLaSemana * 1.2f
+                    } else {
+                        meta * 1.1f
+                    }
+
+                    barChart.axisLeft.axisMaximum = limiteSuperior
+
+                    barChart.axisLeft.removeAllLimitLines()
+
+                    val lineaMeta = LimitLine(meta, "Meta: $objetivoPasos")
+                    lineaMeta.lineWidth = 2f
+                    lineaMeta.enableDashedLine(10f, 10f, 0f)
+                    lineaMeta.labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                    lineaMeta.textSize = 10f
+                    lineaMeta.lineColor = Color.parseColor("#ad0000")
+
+                    barChart.axisLeft.addLimitLine(lineaMeta)
+
                     val dataSet = BarDataSet(entries, "Pasos").apply {
-                        color = Color.parseColor("#ad0000")
+                        colors = entries.map {
+                            if (it.y >= meta) Color.parseColor("#ad0000")
+                            else Color.parseColor("#ad0000")
+                        }
                         valueTextColor = Color.BLACK
                         valueTextSize = 10f
                         setDrawValues(false)
@@ -486,6 +507,9 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
                     barChart.data = data
                     barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+
+                    barChart.xAxis.labelCount = 7
+
                     barChart.notifyDataSetChanged()
                     barChart.invalidate()
                     barChart.animateY(1000)
@@ -493,7 +517,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
             }
         }
     }
-    // -------------------------------------------------------------
 
     private fun actualizarUI() {
         txtPasos.text = pasosHoy.toString()
@@ -518,10 +541,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
         txtRacha.text = obtenerRacha().toString()
         val isRachaActiva = calcularProgresoTotal() >= 100
         actualizarEstadoRacha(isRachaActiva)
-
-        // OPCIONAL: Si quieres que la gráfica se actualice en tiempo real con cada paso
-        // puedes llamar a cargarGraficaSemanal() aquí, pero consume más recursos.
-        // Con hacerlo en onCreateView suele ser suficiente.
     }
 
     private fun calcularDistancia(): Double = (pasosHoy * 0.6) / 1000
@@ -619,7 +638,6 @@ class PhysicalFragment : Fragment(), SensorEventListener, ObjetivoCallback {
 
             cargarHistorial()
             actualizarUI()
-            // Recargamos la gráfica porque cambió el día
             cargarGraficaSemanal()
         }
     }
