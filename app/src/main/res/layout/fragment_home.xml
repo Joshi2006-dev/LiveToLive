@@ -516,21 +516,9 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Pasos:"
+                    android:text="Objetivo:"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/txtPasos"
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtTitulo3"
-                    android:layout_marginStart="75dp"
-                    android:layout_marginTop="0dp"
-                    android:text="3,524/6,500"
-                    android:textAlignment="textEnd"
-                    android:textColor="#ad0000"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtCaloriasLb"
@@ -540,15 +528,15 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Calorías:"
+                    android:text="Pasos:"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/txtCalorias"
-                    android:layout_width="70dp"
+                    android:id="@+id/txtObjetivoPhy"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtPasosLb"
+                    android:layout_below="@id/txtTitulo3"
                     android:layout_marginStart="94dp"
                     android:layout_marginTop="0dp"
                     android:text="180 kcal"
@@ -557,23 +545,12 @@
                     android:textStyle="bold" />
 
                 <!-- Progreso -->
-                <TextView
-                    android:id="@+id/txtDistanciaLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtCaloriasLb"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="0dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Distancia:"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/txtDistancia"
-                    android:layout_width="70dp"
+                    android:id="@+id/txtPasosPhy"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtCaloriasLb"
+                    android:layout_below="@id/txtObjetivoPhy"
                     android:layout_marginStart="94dp"
                     android:layout_marginTop="0dp"
                     android:text="2.4 kml"
@@ -603,7 +580,8 @@
                     android:layout_width="134dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="30dp"
-                    android:layout_below="@id/txtDistanciaLabel"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/txtPasosPhy"
                     android:progress="54"
                     android:progressTint="#ad0000"
                     android:max="100"

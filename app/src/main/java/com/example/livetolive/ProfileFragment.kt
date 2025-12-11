@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import kotlin.math.round
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 interface ProfileUpdateCallback {
     fun onProfileDataUpdated()
@@ -70,8 +71,9 @@ class ProfileFragment : Fragment(), ProfileUpdateCallback {
         lifecycleScope.launch {
             db.hidratacionDao().getTotalLitros().collect { litros ->
                 var litrosPrevios:Float=litros?:0f
-                var litroTotalesTomados=litrosPrevios+ sharedPreferencesApp.getFloat("HidratationProgress",0f)
-                litrosTotales.text = litroTotalesTomados.toString()
+                val litroTotalesTomados = litrosPrevios + sharedPreferencesApp.getFloat("HidratationProgress", 0f)
+                val redondeado = (litroTotalesTomados * 10).roundToInt() / 10f
+                litrosTotales.text = redondeado.toString()
             }
         }
 

@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
         val home =inflater.inflate(R.layout.fragment_home, container, false)
         miDb = AppDatabase.getDatabase(requireContext())
         var porcentajeActividad:Int=0
-        var porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
+        var porcentajeSueño:Int=0
         val lastDay = sharedPreferencesApp.getLastDay()
         val today = Calendar.getInstance().timeInMillis
         //Cartas
@@ -78,11 +78,13 @@ class HomeFragment : Fragment() {
         //Titulos de las Cartas
         val txtprogre1=home.findViewById<TextView>(R.id.txtProgreso)
         val txtprogre2=home.findViewById<TextView>(R.id.txtProgreso2)
+        val txtpogre3=home.findViewById<TextView>(R.id.txtPasosPhy)
+
 
         //Labels de los Objetivos
         val txtobj1=home.findViewById<TextView>(R.id.txtObjetivo)
         val txtobj2=home.findViewById<TextView>(R.id.txtObjetivo2)
-        val txtobj3=home.findViewById<TextView>(R.id.txtPasos)
+        val txtobj3=home.findViewById<TextView>(R.id.txtObjetivoPhy)
 
 
         //Elementos del calendario
@@ -148,7 +150,7 @@ class HomeFragment : Fragment() {
                 miDb.hidratacionDao().insert(registro)
                 sharedPreferencesApp.saveFloat("HidratationProgress",0f)
                 txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
-                porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
+                porcentajeAgua= 0
                 txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
             }
 
@@ -162,7 +164,7 @@ class HomeFragment : Fragment() {
                 sharedPreferencesApp.saveInt("SleepProgress",0)
                 txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
                 txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
-                porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
+                porcentajeSueño=0
 
             }
 
@@ -174,8 +176,9 @@ class HomeFragment : Fragment() {
                 )
                 miDb.actividadDao().insert(registro)
                 sharedPreferencesApp.saveInt("ActividadProgress",0)
-                txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
-                porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+                txtobj3.text=sharedPreferencesApp.getInt("ActividadGoal").toString()+" Pasos"
+                txtpogre3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+" Pasos"
+                porcentajeActividad= 0
             }
             sharedPreferencesApp.saveLastDay(today)
             sharedPreferencesApp.saveBoolean("litrosTomados",false)
@@ -187,17 +190,25 @@ class HomeFragment : Fragment() {
             txtobj1.text=sharedPreferencesApp.getFloat("HidrateGoal").toString()+" L"
             porcentajeAgua= ((sharedPreferencesApp.getFloat("HidratationProgress")/sharedPreferencesApp.getFloat("HidrateGoal"))*100).toInt()
             txtprogre1.text=sharedPreferencesApp.getFloat("HidratationProgress").toString()+" L"
+
+            txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
+            txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
+            porcentajeSueño= ((sharedPreferencesApp.getInt("SleepProgress").toFloat() / sharedPreferencesApp.getInt("SleepGoal").toFloat())*100).toInt()
+
+            txtobj3.text=sharedPreferencesApp.getInt("ActividadGoal").toString() +" Pasos"
+            txtpogre3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+" Pasos"
+            porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
         }
 
 
-        txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
+//        txtobj2.text=sharedPreferencesApp.getInt("SleepGoal").toString()+" H"
         // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
         // <<< FIN AÑADIDO
-        txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
+//        txtprogre2.text=sharedPreferencesApp.getInt("SleepProgress").toString()+" H"
 
-        txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
+//        txtobj3.text=sharedPreferencesApp.getInt("ActividadProgress").toString()+"/"+sharedPreferencesApp.getInt("ActividadGoal").toString()
         // <<< AÑADIDO: usar Float en la división para evitar truncamiento entero que daba 0
-        porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
+//        porcentajeActividad= ((sharedPreferencesApp.getInt("ActividadProgress").toFloat() / sharedPreferencesApp.getInt("ActividadGoal").toFloat())*100).toInt()
         // <<< FIN AÑADIDO
 
 
