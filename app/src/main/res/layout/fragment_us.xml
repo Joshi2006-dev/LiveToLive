@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Us_Fragament"
+    android:id="@+id/scroller"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="12dp"
+            android:text="Desarrolladores"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#064750"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#064751"/>
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="10dp">
+            <RelativeLayout
+                android:id="@+id/CardLogro1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/hidratationgradient">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        >
+                        <ImageView
+                            android:layout_width="90sp"
+                            android:layout_height="90sp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/white" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgProfile"
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/profile_example"
+                            app:shapeAppearanceOverlay="@style/roundedImageView" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtLogro1"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:layout_marginTop="5dp"
+                            android:paddingTop="10dp"
+                            android:text="Josué Vasquez"
+                            android:textColor="@color/white"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/txtLogroDesc1"
+                            android:layout_width="254dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins"
+                            android:text="Encargado de Diseño y módulo de Hidratación."
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/fisicgradient">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        >
+                        <ImageView
+                            android:layout_width="90sp"
+                            android:layout_height="90sp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/white" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/profile_example"
+                            app:shapeAppearanceOverlay="@style/roundedImageView" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:paddingTop="10dp"
+                            android:text="Edward Maradiaga"
+                            android:textColor="@color/white"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:layout_width="254dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins"
+                            android:text="Encargado de funciones con sensores para actividad física y modulo de perfil"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/sleepgradient">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        >
+                        <ImageView
+                            android:layout_width="90sp"
+                            android:layout_height="90sp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/white" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/profile_example"
+                            app:shapeAppearanceOverlay="@style/roundedImageView" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:layout_marginTop="5dp"
+                            android:paddingTop="10dp"
+                            android:text="Kenneth Zepeda"
+                            android:textColor="@color/white"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:layout_width="255dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins"
+                            android:text="Encargado de modulo de sueño y pruebas de todos los modulos."
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+</ScrollView>

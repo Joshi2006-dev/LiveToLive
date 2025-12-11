@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.group->{
+                supportFragmentManager.commit {
+                    replace<Us_Fragament>(R.id.Frame)
+                    setReorderingAllowed(true)
+                    addToBackStack("replacement")
+                }
                 true
             }
             R.id.profile->{
